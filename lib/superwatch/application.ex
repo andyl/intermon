@@ -1,4 +1,4 @@
-defmodule Intermon.Application do
+defmodule Superwatch.Application do
   # See https://hexdocs.pm/elixir/Application.html
   # for more information on OTP Applications
   @moduledoc false
@@ -8,13 +8,13 @@ defmodule Intermon.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Intermon.Worker.start_link(arg)
-      # {Intermon.Worker, arg}
+      # Starts a worker by calling: Superwatch.Worker.start_link(arg)
+      # {Superwatch.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
-    opts = [strategy: :one_for_one, name: Intermon.Supervisor]
+    opts = [strategy: :one_for_one, name: Superwatch.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

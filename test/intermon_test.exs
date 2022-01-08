@@ -1,8 +1,8 @@
-defmodule IntermonTest do
+defmodule SuperwatchTest do
   use ExUnit.Case
-  doctest Intermon
+  doctest Superwatch
 
   test "greets the world" do
-    assert Intermon.hello() == :world
+    assert Superwatch.hello() == :world
   end
 end

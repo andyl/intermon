@@ -1,6 +1,6 @@
-defmodule Intermon do
+defmodule Superwatch do
   @moduledoc """
-  Documentation for `Intermon`.
+  Documentation for `Superwatch`.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule Intermon do
 
   ## Examples
 
-      iex> Intermon.hello()
+      iex> Superwatch.hello()
       :world
 
   """
