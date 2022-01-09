@@ -1,73 +1,107 @@
 # Superwatch
 
-Superwatch is an interactive supervisor for file monitor programs like `fswatch`, `entr` and `watchexec`.
+Superwatch is an Elixir script that provides interactive supervision for file
+monitor programs like [fswatch][f], [entr][e] and [watchexec][w].
 
-Superwatch is a pre-production prototype, written as an Elixir Script. 
+Superwatch supports multiple test configurations for Elixir projects:
 
-Superwatch reads YAML config files with the following items:
+- Monitors: file change monitor program like `fswatch`
+- Workers: worker program like `mix test`
+- Agents: blocks that defines interactive Monitor / Worker options
 
-- Agent: A block that defines Monitor and Worker commands, and interactive options for each
-- Monitor: A file change monitor program like `fswatch`, `entr` or `watchexec`.
-- Worker: A worker program like `mix test`, etc.
+## Getting Started
 
-## The File Change Monitor Landscape
+    > #install superwatch 
+    > mix escript.install hex superwatch 
+    >
+    > # get help
+    > superwatch help
+    >
+    > # check for installed Monitor programs
+    > superwatch check 
+    >
+    > # generate a superwatch config file
+    > superwatch init 
+    >
+    > # start superwatch
+    > cd <YOURPROJECT>
+    > superwatch start
+
+## Superwatch Config
+
+The Superwatch config file is stored your root directory at `~/.superwatch.yml`.
+
+    ---
+    ex_unit:
+      desc: ExUnit for Elixir Project
+      monitor_command: watchexec -c -w lib -w test -e ex,exs,eex,heex "<%= worker_command %>"
+      worker_command: mix test <%= worker_flags %> <%= worker_opts %> --stale ; echo ---
+      worker_exit: /^---$/
+      worker_flags:
+        focus: 
+          alias: f
+          desc: Run only focus tests
+          longdesc: |
+            Only run specific tests, using ExUnit's `tag` feature
+    
+                @tag focus
+                test "mytest" do 
+                  assert 1 == 1
+                end
+          default: false
+          output: "--only focus:true" 
+      worker_opts:
+        only: 
+          alias: o
+          desc: Only run tests that match the filter
+          default: false
+          output: "--only <%= value %>" 
+    ex_unit_umbrella: 
+      import: [ex_unit]
+      desc: ExUnit for Elixir Umbrella Project
+      monitor_command: watchexec -c -w apps -e ex,exs,eex,heex "<%= worker_command %>"
+
+## Superwatch State 
+
+The Superwatch state file is stored in the project root directory at
+`<project>/.superwatch_state.yml`.  Be sure to add `.superwatch_state.yml` to
+your `.gitignore` file.
+
+    ---
+    agent: ex_unit
+    monitor_flags: []
+    monitor_opts: []
+    worker_flags: [-f]
+    worker_opts: []
+
+## Comparable Projects
 
 There are several excellent file monitor programs.  These are typically used
 during development to run tests automatically every time a source or test file
 is saved.
 
-### Independent vs Bundled
+|----------------------------|------------|--------------|
+| Project                    | Language   | Interactive? |
+|----------------------------|------------|--------------|
+| [fswatch][f]               | Agnostic   | no           |
+| [entr][e]                  | Agnostic   | no           |
+| [watchexec][w]             | Agnostic   | no           |
+| [guard][g]                 | Ruby       | no           |
+| [jest][j] [watch][jw]      | Javascript | yes          |
+| [mix_test_watch][mw]       | Elixir     | no           |
+| [mix_test_interactive][mi] | Elixir     | yes          |
+|----------------------------|------------|--------------|
 
-Many monitor programs are *bundled* as a language-specific project dependency.
-(eg guard [ruby], mix_test_watch [elixir], jest [javascript])
+Superwatch is language agnostic and interactive.
 
-Other monitor programs run *independent* of project and language. (eg
-watchexec, entr, fswatch) Independent watchers can be used with any any
-language, giving developers flexibity to use their favorite tool in a given
-project.
-
-### Interactive vs Static
-
-Most monitor programs are *static* - they run the same test command every time
-a file changes.
-
-Some monitor programs are *interactive*, and allow you to dynamically change
-which tests should be run with a few keystrokes.  For example, you may easily
-switch between running all tests, stale tests, or failed tests.  Or you can run
-only the tests whose filenames contain a substring.
-
-Until now, interactive monitor programs are bundled as a project dependency (eg
-mix_test_interactive [elixir], jest interactive [javacript]).  
-
-### Independent, Interactive
-
-Superwatch is an interactive supervisor that works with any monitor program.
-Superwatch can be used independently across any language or project.
-
-```mermaid
-graph TD;
-    Superwatch-->InteractiveRepl;
-    Superwatch-->YourMonitorProgram;
-```
-
-Superwatch supervises two processes:
-
-- a REPL that takes interactive commands from the terminal
-- your watcher program - like `fswatch`, `entr` or `watchexec`
-
-When the repl takes commands from the terminal, it restarts your watcher
-program with updated options.
-
-## Using 
-
-
-TBD 
-
-## Configuring
-
-TBD 
-
-## Related Projects
+[f]: https://emcrisostomo.github.io/fswatch/
+[e]: http://eradman.com/entrproject/
+[w]: https://watchexec.github.io/
+[g]: https://github.com/guard/guard
+[j]: https://jestjs.io/
+[ji]: https://egghead.io/lessons/javascript-use-jest-s-interactive-watch-mode 
+[mw]: https://hex.pm/packages/mix_test_watch
+[mi]: https://hexdocs.pm/mix_test_interactive/readme.html
 
 ## Contributing
 

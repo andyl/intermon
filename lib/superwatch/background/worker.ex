@@ -1,4 +1,4 @@
-defmodule Util.Worker do
+defmodule Superwatch.Background.Worker do
   def run(cmd) do
     port = Port.open({:spawn, cmd}, [:stderr_to_stdout, :binary, :exit_status])
     stream_output(port)

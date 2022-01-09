@@ -3,10 +3,11 @@ defmodule Intermon.MixProject do
 
   def project do
     [
-      app: :intermon,
-      version: "0.1.0",
+      app: :superwatch,
+      version: "0.0.1",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
+      escript: escript(), 
       deps: deps()
     ]
   end
@@ -15,15 +16,19 @@ defmodule Intermon.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Intermon.Application, []}
+      # mod: {Superwatch.Runtime.Application, []}
     ]
   end
 
-  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:yaml_elixir, "~> 2.8"}
+    ]
+  end
+
+  defp escript do 
+    [
+      main_module: Superwatch.Cli.Escript
     ]
   end
 end

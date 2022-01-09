@@ -1,0 +1,31 @@
+---
+ex_unit:
+  desc: ExUnit for Elixir Project
+  monitor_command: watchexec -c -w lib -w test -e ex,exs,eex,heex "<%= worker_command %>"
+  worker_command: mix test <%= worker_flags %> <%= worker_opts %> --stale ; echo ---
+  worker_exit: /^---$/
+  worker_flags:
+    focus: 
+      shortname: f
+      shortdoc: Run only focus tests
+      doc: |
+        Only run specific tests, using ExUnit's `tag` feature
+
+            @tag focus
+            test "mytest" do 
+              assert 1 == 1
+            end
+      default: false
+      output: "--only focus:true" 
+  worker_opts:
+    only: 
+      shortname: o
+      shortdoc: Only run tests that match the filter
+      default: false
+      output: "--only <%= value %>" 
+
+ex_unit_umbrella: 
+  include: [ex_unit]
+  desc: ExUnit for Elixir Umbrella Project
+  monitor_command: watchexec -c -w apps -e ex,exs,eex,heex "<%= worker_command %>"
+
