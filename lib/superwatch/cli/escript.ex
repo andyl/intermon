@@ -5,11 +5,11 @@ defmodule Superwatch.Cli.Escript do
 
   def main([arg]) do
     case arg do 
-      "check" -> IO.puts("check")
-      "init"  -> IO.puts("init")
-      "start" -> IO.puts("start")
+      "check" -> check()
+      "init"  -> init()
+      "start" -> start()
       "help"  -> help()
-      arg -> IO.puts("Unrecognized: #{arg}")
+      arg -> IO.puts("Unrecognized: #{arg} (try 'superwatch help')")
     end
   end
 
@@ -23,11 +23,20 @@ defmodule Superwatch.Cli.Escript do
     """
   end
 
+  def check do 
+    IO.puts("CHECK")
+  end
+
+  def init do 
+    IO.puts("INIT")
+  end
+
   def start do 
     # read state 
     # read config
     # select agent
     # start watcher 
     # start repl
+    Superwatch.Cli.Repl.start()
   end
 end

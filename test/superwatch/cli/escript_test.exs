@@ -18,12 +18,8 @@ defmodule Superwatch.Cli.EscriptTest do
       assert capture_io(fn -> Escript.main(~w(help)) end) =~ "Superwatch Help"
     end
 
-    test "with start arg" do 
-      assert capture_io(fn -> Escript.main(~w(start)) end) =~ "start"
-    end
-
     test "with init arg" do 
-      assert capture_io(fn -> Escript.main(~w(init)) end) =~ "init"
+      assert capture_io(fn -> Escript.main(~w(init)) end) =~ "INIT"
     end
   end
 
