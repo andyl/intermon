@@ -28,7 +28,7 @@ defmodule Superwatch.ConfigTest do
   describe "#config_struct" do
     test "generates struct for each agent" do 
       list = Config.test_config_yaml() |> Config.config_data() |> Config.config_struct()
-      assert list |> IO.inspect()
+      assert list 
     end
   end
 end
