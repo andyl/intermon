@@ -22,7 +22,8 @@ defmodule Intermon.MixProject do
 
   defp deps do
     [
-      {:yaml_elixir, "~> 2.8"}
+      {:yaml_elixir, "~> 2.8"}, 
+      {:ymlr, "~> 2.0"}
     ]
   end
 

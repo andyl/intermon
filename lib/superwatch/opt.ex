@@ -18,6 +18,19 @@ defmodule Superwatch.Opt do
     }
   end
 
+  def genmap("") do 
+    []
+  end
+
+  def genmap(data) when is_map(data) do
+    data 
+    |> Enum.map(&gen/1)
+  end
+
+  def genmap(_map) do 
+    []
+  end
+
   def set(old, value) do 
     %Opt{old | value: value}
   end

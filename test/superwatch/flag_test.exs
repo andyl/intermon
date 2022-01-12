@@ -58,7 +58,7 @@ defmodule Superwatch.FlagTest do
   end
 
   defp flag_map do
-    flag = Superwatch.Config.test_config_yaml()
+    flag = Superwatch.Config.test_yaml()
            |> Superwatch.Config.config_data()
            |> Map.fetch!("ex_unit") 
            |> Map.fetch!("worker_flags") 

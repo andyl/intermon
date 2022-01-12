@@ -1,4 +1,5 @@
 defmodule Superwatch.Background.Manager do
+
   use GenServer
 
   # ----- setup

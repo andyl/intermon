@@ -31,7 +31,7 @@ defmodule Superwatch.OptTest do
   end
 
   defp opt_map do
-    opt = Superwatch.Config.test_config_yaml()
+    opt = Superwatch.Config.test_yaml()
            |> Superwatch.Config.config_data()
            |> Map.fetch!("ex_unit") 
            |> Map.fetch!("worker_opts") 

@@ -1,5 +1,5 @@
 defmodule Superwatch.Cli.Repl do
-  def start do
+  def start(_config, _state) do
     loop() 
   end
 

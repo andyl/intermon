@@ -11,10 +11,22 @@ defmodule Superwatch.Background.Worker do
     GenServer.start_link(__MODULE__, cmd, name: __MODULE__)
   end
 
+  def init do 
+    init("")
+  end 
+
   @impl true
-  def init(cmd \\ "") do
-    port = start_port(cmd)
+  def init(cmd) when is_binary(cmd) do
+    IO.inspect(cmd, label: "WORKERINIT") 
+    port = case cmd do
+      "" -> nil
+      cmd -> start_port(cmd)
+    end
     {:ok, %Worker{cmd: cmd, port: port}}
+  end
+
+  def init(_cmd) do
+    {:ok, %Worker{cmd: "", port: nil}}
   end
 
   @impl true 
@@ -58,7 +70,7 @@ defmodule Superwatch.Background.Worker do
   @impl true 
   def handle_call(:stop, _from, %{port: old_port} = state) do 
     if old_port, do: Port.close(old_port)
-    {:reply, :ok, %Worker{state | port: nil}}
+    {:reply, :ok, %Worker{state | cmd: "", port: nil}}
   end
 
   @impl true

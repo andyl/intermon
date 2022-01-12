@@ -1,4 +1,7 @@
 defmodule Superwatch.Cli.Escript do
+
+  alias Superwatch.{Config, State} 
+
   def main([]) do 
     help()
   end
@@ -32,11 +35,10 @@ defmodule Superwatch.Cli.Escript do
   end
 
   def start do 
-    # read state 
-    # read config
-    # select agent
-    # start watcher 
-    # start repl
-    Superwatch.Cli.Repl.start()
+    config = Config.test_struct() 
+    state  = State.struct(:test) 
+    cmd = Superwatch.Command.text(config, state)
+    Superwatch.Background.Worker.start(cmd)
+    Superwatch.Cli.Repl.start(config, state)
   end
 end

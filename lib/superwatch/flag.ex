@@ -15,7 +15,20 @@ defmodule Superwatch.Flag do
       shortdoc: Map.get(data, "shortdoc", ""), 
       doc: Map.get(data, "doc", ""), 
       output: Map.get(data, "output", ""), 
-    }
+    } 
+  end
+
+  def genmap("") do 
+    []
+  end
+
+  def genmap(data) when is_map(data) do
+    data 
+    |> Enum.map(&gen/1)
+  end
+
+  def genmap(_map) do 
+    []
   end
 
   def toggle(old) do
