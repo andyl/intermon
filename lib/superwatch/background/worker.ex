@@ -39,7 +39,7 @@ defmodule Superwatch.Background.Worker do
   end
 
   @impl true 
-  def terminate(_reason, %{pid: pid} = state) do
+  def terminate(_reason, %{pid: _pid} = _state) do
     # IO.inspect(pid, label: "TERMINATE PORT") 
     # IO.inspect(state, label: "TERMINATE STATE") 
     :normal

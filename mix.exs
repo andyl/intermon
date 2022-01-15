@@ -25,6 +25,7 @@ defmodule Intermon.MixProject do
     [
       {:muontrap, "~> 1.0"}, 
       {:yaml_elixir, "~> 2.8"}, 
+      {:file_system, "~> 0.2"}, 
       {:ymlr, "~> 2.0"}
     ]
   end
