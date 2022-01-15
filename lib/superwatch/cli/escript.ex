@@ -1,7 +1,5 @@
 defmodule Superwatch.Cli.Escript do
 
-  alias Superwatch.{Config, State} 
-
   def main([]) do 
     help()
   end
@@ -10,7 +8,7 @@ defmodule Superwatch.Cli.Escript do
     case arg do 
       "check" -> check()
       "init"  -> init()
-      "start" -> start()
+      "start" -> Superwatch.Cli.Repl.start()
       "help"  -> help()
       arg -> IO.puts("Unrecognized: #{arg} (try 'superwatch help')")
     end
@@ -35,10 +33,8 @@ defmodule Superwatch.Cli.Escript do
   end
 
   def start do 
-    config = Config.test_struct() 
-    state  = State.struct(:test) 
-    cmd = Superwatch.Command.text(config, state)
+    cmd = Superwatch.Background.Manager.command()
     Superwatch.Background.Worker.start(cmd)
-    Superwatch.Cli.Repl.start(config, state)
+    Superwatch.Cli.Repl.start()
   end
 end

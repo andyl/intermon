@@ -1,4 +1,4 @@
-defmodule Superwatch.Background.UserState do
+defmodule Superwatch.User.State do
 
   use GenServer 
 
@@ -46,7 +46,7 @@ defmodule Superwatch.Background.UserState do
   defp state_file do
     # tmp file copied from priv dir for tests 
     # see 'test / setup' block for details
-    case Mix.env() do 
+    case Application.get_env(:superwatch, :env) do 
       :test -> "/tmp/superwatch_test_state.yml"
       _ -> "./superchat_state.yml" |> Path.expand()
     end

@@ -1,0 +1,7 @@
+#!/usr/bin/env elixir
+
+Mix.install([
+  {:superwatch, path: "~/src/superwatch"}
+])
+
+Superwatch.Cli.Escript.start()

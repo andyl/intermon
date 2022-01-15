@@ -1,4 +1,4 @@
-defmodule Superwatch.Background.UserConfig do
+defmodule Superwatch.User.Config do
 
   use GenServer 
 
@@ -14,6 +14,11 @@ defmodule Superwatch.Background.UserConfig do
   def init(config \\ %{}) do
     new_config = config_map() |> config_update(config)
     {:ok, %{config: new_config}}
+  end
+
+  @impl true
+  def terminate(_reason, _state) do
+    :normal
   end
 
   # ----- api 
@@ -32,7 +37,7 @@ defmodule Superwatch.Background.UserConfig do
   # ----- helpers 
   
   defp config_file do
-    case Mix.env() do 
+    case Application.get_env(:superwatch, :env) do 
       :test -> Application.app_dir(:superwatch) <> "/priv/superwatch.yml"
       _ -> "~/superwatch.yml" |> Path.expand()
     end

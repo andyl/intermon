@@ -8,6 +8,7 @@ defmodule Intermon.MixProject do
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       escript: escript(), 
+      aliases: aliases(), 
       deps: deps()
     ]
   end
@@ -15,13 +16,14 @@ defmodule Intermon.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger],
-      mod: {Superwatch.Background.Application, []}
+      extra_applications: [:logger, :muontrap],
+      mod: {Superwatch.Background.Application, []}, 
     ]
   end
 
   defp deps do
     [
+      {:muontrap, "~> 1.0"}, 
       {:yaml_elixir, "~> 2.8"}, 
       {:ymlr, "~> 2.0"}
     ]
@@ -30,6 +32,12 @@ defmodule Intermon.MixProject do
   defp escript do 
     [
       main_module: Superwatch.Cli.Escript
+    ]
+  end
+
+  defp aliases do
+    [
+      repl: ["run -e \"Superwatch.Cli.Escript.start()\""]
     ]
   end
 end

@@ -1,14 +1,18 @@
 defmodule Superwatch.Background.Worker do
   use GenServer
 
-  defstruct [:port, :cmd]
+  defstruct [:pid, :cmd]
 
-  alias Superwatch.Background.Worker
+  alias Superwatch.Background.{Worker, Manager}
 
-  # ----- setup / shutdown
+  # ----- startup / shutdown
 
   def start_link(cmd \\ "") do 
-    GenServer.start_link(__MODULE__, cmd, name: __MODULE__)
+    launch_cmd = case cmd do 
+      "" -> Manager.command 
+      cmd -> cmd
+    end
+    GenServer.start_link(__MODULE__, launch_cmd, name: __MODULE__)
   end
 
   def init do 
@@ -17,73 +21,35 @@ defmodule Superwatch.Background.Worker do
 
   @impl true
   def init(cmd) when is_binary(cmd) do
-    IO.inspect(cmd, label: "WORKERINIT") 
-    port = case cmd do
+    pid = case cmd do
       "" -> nil
-      cmd -> start_port(cmd)
+      cmd -> start_cmd(cmd)
     end
-    {:ok, %Worker{cmd: cmd, port: port}}
+    {:ok, %Worker{cmd: cmd, pid: pid}}
   end
 
-  def init(_cmd) do
-    {:ok, %Worker{cmd: "", port: nil}}
+  def init(cmd) when is_map(cmd) do
+    Manager.command() |> init()
   end
 
   @impl true 
-  def terminate(_reason, %{port: nil} = _state) do
+  def terminate(_reason, %{pid: nil} = _state) do
+    IO.puts "TERMINATE NOPORT"
     :normal
   end
 
   @impl true 
-  def terminate(_reason, %{port: port} = _state) do
-    Port.close(port)
+  def terminate(_reason, %{pid: pid} = state) do
+    # IO.inspect(pid, label: "TERMINATE PORT") 
+    # IO.inspect(state, label: "TERMINATE STATE") 
     :normal
   end
 
-  # ----- callbacks 
-
-  @impl true
-  def handle_info({_port, {:data, data}}, state) do 
-    IO.write data
-    {:noreply, state}
-  end
-
-  @impl true
-  def handle_info({_port, {:exit_status, 0}}, state) do 
-    IO.puts("WORKER DONE")
-    {:noreply, state}
-  end
-
-  @impl true
-  def handle_info({_port, {:exit_status, status}}, state) do 
-    IO.puts("WORKER ERROR -> status #{status}")
-    {:noreply, state}
-  end
-
-  @impl true 
-  def handle_call({:start, cmd}, _from, %{port: old_port} = state) do 
-    if old_port, do: Port.close(old_port)
-    new_port = start_port(cmd)
-    {:reply, :ok, %Worker{state | port: new_port}}
-  end
-
-  @impl true 
-  def handle_call(:stop, _from, %{port: old_port} = state) do 
-    if old_port, do: Port.close(old_port)
-    {:reply, :ok, %Worker{state | cmd: "", port: nil}}
-  end
-
-  @impl true
-  def handle_call(:state, _from, state) do 
-    {:reply, state, state}
-  end
-
-  @impl true
-  def handle_call(:port, _from, %{port: port} = state) do 
-    {:reply, port, state}
-  end
-  
   # ----- api
+
+  def start do 
+    Manager.command() |> start()
+  end
   
   def start(cmd) do 
     GenServer.call(__MODULE__, {:start, cmd}) 
@@ -98,19 +64,64 @@ defmodule Superwatch.Background.Worker do
   end
 
   def running? do 
-    GenServer.call(__MODULE__, :port)
+    GenServer.call(__MODULE__, :pid)
   end
 
-  # ----- helpers
+  def pid do 
+    GenServer.call(__MODULE__, :pid)
+  end
 
-  def start_port(cmd) do 
-    Port.open({:spawn, cmd}, [:stderr_to_stdout, :binary, :exit_status])
+  def pidinfo do 
+    GenServer.call(__MODULE__, :pidinfo) 
+  end
+
+  # ----- callbacks 
+
+  @impl true 
+  def handle_call({:start, cmd}, _from, %{pid: old_pid} = state) do 
+    if old_pid, do: stop_cmd(old_pid)
+    new_pid = start_cmd(cmd)
+    {:reply, :ok, %Worker{state | cmd: cmd, pid: new_pid}}
+  end
+
+
+  @impl true 
+  def handle_call(:stop, _from, %{pid: old_pid} = state) do 
+    if old_pid, do: stop_cmd(old_pid)
+    {:reply, :ok, %Worker{state | cmd: "", pid: nil}}
+  end
+
+  @impl true
+  def handle_call(:state, _from, state) do 
+    {:reply, state, state}
+  end
+
+  @impl true
+  def handle_call(:pid, _from, %{pid: pid} = state) do 
+    {:reply, pid, state}
+  end
+
+  @impl true
+  def handle_call(:pidinfo, _from, %{pid: pid} = state) do 
+    info = Process.info(pid)
+    {:reply, info, state}
   end
   
-  # defp write_prompt({prompt_string, exit_regex}, data) do
-  #   if data =~ exit_regex do
-  #     IO.puts(prompt_string)
-  #   end
-  # end
+  # ----- helpers
 
+
+  def start_cmd(cmd) do 
+    # cmd |> IO.inspect(label: "START_CMD") 
+    [cmd | args] = cmd |> OptionParser.split() #|> IO.inspect(label: "START_MuT")
+    spawn(fn -> 
+      MuonTrap.cmd(cmd, args, into: Util.Io.stream())
+    end)
+  end
+
+  def stop_cmd(nil), do: :ok 
+
+  def stop_cmd(pid) do 
+    Process.exit(pid, :kill)
+  end
+  
 end
