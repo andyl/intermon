@@ -43,19 +43,7 @@ defmodule Util.IoStream do
         :ok, {:cont, x} ->
           case raw do
             true -> IO.binwrite(device, x)
-            false -> 
-
-              # if x =~ "---" do 
-              #   # prompt = "\nS | " <> "HELLO > "
-              #   prompt = "\nS | " <> Superwatch.Background.Manager.prompt()
-              #   IO.write(device, x)
-              #   IO.write(device, prompt) 
-              # else
-              #   IO.write(device, x) 
-              # end 
-
-              IO.write(device, x) 
-
+            false -> IO.write(device, x) 
           end
 
         :ok, _ ->

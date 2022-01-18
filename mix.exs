@@ -38,7 +38,7 @@ defmodule Intermon.MixProject do
 
   defp aliases do
     [
-      repl: ["run -e \"Superwatch.Cli.Escript.start()\""]
+      repl: ["run -e Superwatch.Cli.Escript.start"]
     ]
   end
 end

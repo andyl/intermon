@@ -84,7 +84,6 @@ defmodule Superwatch.Background.Worker do
     {:reply, :ok, %Worker{state | cmd: cmd, pid: new_pid}}
   end
 
-
   @impl true 
   def handle_call(:stop, _from, %{pid: old_pid} = state) do 
     if old_pid, do: stop_cmd(old_pid)
@@ -108,7 +107,6 @@ defmodule Superwatch.Background.Worker do
   end
   
   # ----- helpers
-
 
   def start_cmd(cmd) do 
     # cmd |> IO.inspect(label: "START_CMD") 
