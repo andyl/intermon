@@ -1,15 +1,18 @@
 defmodule Superwatch.Background.Runner do
+
   use GenServer
 
-  defstruct [:task, :cmd, :prompt, :clearscreen, :streamio]
+  defstruct [:task, :cmd, :prompt, :clearscreen]
 
   alias Superwatch.Background.Runner
 
+  @moduledoc """
+  Runner - content TBD
+  """
+
   # ----- startup / shutdown 
 
-  def start_link do
-    start_link([])
-  end
+  def start_link, do: start_link([])
 
   def start_link(cmd) when is_binary(cmd) do
     start_link([cmd: cmd])
@@ -33,9 +36,7 @@ defmodule Superwatch.Background.Runner do
 
   # ----- api 
 
-  def start do 
-    start([])
-  end
+  def start, do: start([])
 
   def start(cmd) when is_binary(cmd) do 
     start([cmd: cmd])
@@ -146,7 +147,7 @@ defmodule Superwatch.Background.Runner do
 
   @impl true
   def handle_cast(:exit, state) do 
-    if state.task && state.prompt && state.streamio do
+    if state.task && state.prompt do
       IO.write(state.prompt) 
     end
     {:noreply, %Runner{state | task: nil}}
@@ -161,12 +162,9 @@ defmodule Superwatch.Background.Runner do
   defp start_cmd(state) do 
     [cmd | args] = state.cmd |> OptionParser.split() 
     clearscreen = "\x1Bc"
-    if state.streamio && state.clearscreen, do: IO.write(clearscreen)
+    if state.clearscreen, do: IO.write(clearscreen)
     Task.async(fn -> 
-      result = case state.streamio do 
-        true -> MuonTrap.cmd(cmd, args, into: IO.stream()); "Stream Output"
-        _    -> MuonTrap.cmd(cmd, args) |> elem(0)
-      end
+      result = MuonTrap.cmd(cmd, args, into: IO.stream())
       exit()
       result
     end)
@@ -183,7 +181,6 @@ defmodule Superwatch.Background.Runner do
       task:        Map.get(opts, :task, nil), 
       cmd:         Map.get(opts, :cmd, nil), 
       prompt:      Map.get(opts, :prompt, nil), 
-      streamio:    Map.get(opts, :streamio, nil), 
       clearscreen: Map.get(opts, :clearscreen, nil)
     }
   end
@@ -193,7 +190,6 @@ defmodule Superwatch.Background.Runner do
       task:        Keyword.get(opts, :task, nil), 
       cmd:         Keyword.get(opts, :cmd, nil), 
       prompt:      Keyword.get(opts, :prompt, nil), 
-      streamio:    Keyword.get(opts, :streamio, nil), 
       clearscreen: Keyword.get(opts, :clearscreen, nil)
     }
   end

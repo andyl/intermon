@@ -1,8 +1,9 @@
 defmodule Superwatch.Background.RunnerTest do
+
   use ExUnit.Case
 
   alias Superwatch.Background.Runner
-  # import ExUnit.CaptureIO
+  import ExUnit.CaptureIO
 
   describe "GenServer init" do
     test "with start_supervised" do
@@ -25,63 +26,43 @@ defmodule Superwatch.Background.RunnerTest do
   end
 
   describe "start/1 and stdout" do
-    test "returns command value (streamio: false)" do
-      start_supervised!({Runner, []})
-      Runner.start("echo HELLO")  
-      assert Runner.task_await() == "HELLO\n"
-      assert Runner.state() 
-    end
-
-    test "returns command value (streamio: true)" do
-      start_supervised!({Runner, []})
-      Runner.set(streamio: true)
-      Runner.start("touch /tmp")  
-      assert Runner.task_await() == "Stream Output"
-      assert Runner.state() 
+    test "returns command output" do
+      assert capture_io(fn -> 
+        start_supervised!({Runner, []})
+        Runner.start("echo HELLO")  
+        Runner.task_await() 
+      end) =~ "HELLO"
     end
   end
 
   describe "start/1 and prompt" do
-    test "without streamio" do
-      start_supervised!({Runner, []})
-      Runner.set(prompt: "bing > ")
-      Runner.start("whoami") 
-      assert Runner.task_await()
-      assert Runner.state()
-    end
-
-    test "with streamio" do
-      start_supervised!({Runner, []})
-      Runner.set(streamio: true, prompt: "")
-      Runner.start("touch /tmp") 
-      assert Runner.task_await()
-      assert Runner.state()
+    test "shows prompt" do
+      assert capture_io(fn -> 
+        start_supervised!({Runner, []})
+        Runner.set(prompt: "bing > ")
+        Runner.start("whoami") 
+        Runner.task_await()
+      end) =~ "bing"
     end
   end
 
   describe "start/1 and clearscreen" do
-    test "without streamio" do
-      start_supervised!({Runner, []})
-      Runner.set(clearscreen: true)
-      Runner.start("whoami") 
-      assert Runner.task_await()
-      assert Runner.state()
+    test "clears screen" do
+      assert capture_io(fn -> 
+        start_supervised!({Runner, []})
+        Runner.set(clearscreen: true)
+        Runner.start("echo HELLO") 
+        Runner.task_await()
+      end) =~ "HELLO"
     end
 
-    test "with streamio" do
-      start_supervised!({Runner, []})
-      Runner.set(streamio: true, clearscreen: false)
-      Runner.start("touch /tmp") 
-      assert Runner.task_await()
-      assert Runner.state()
-    end
-
-    test "with streamio and prompt" do
-      start_supervised!({Runner, []})
-      Runner.set(streamio: true, prompt: "", clearscreen: false)
-      Runner.start("touch /tmp") 
-      assert Runner.task_await()
-      assert Runner.state() 
+    test "with prompt" do
+      assert capture_io(fn -> 
+        start_supervised!({Runner, []})
+        Runner.set(prompt: "hey > ", clearscreen: true)
+        Runner.start("echo HELLO") 
+        Runner.task_await()
+      end) =~ "hey"
     end
   end
   

@@ -3,32 +3,26 @@ defmodule Superwatch.Background.Supervisor do
 
   # alias Superwatch.User.{Config, State}
   # alias Superwatch.Background.{Manager, Worker}
+  alias Superwatch.Background.{Runner, Monitor}
 
-  def start_link(args \\ %{}) do 
-    Supervisor.start_link(__MODULE__, args, name: __MODULE__)
+  def start_link(_args) do 
+    Supervisor.start_link(__MODULE__, [], name: __MODULE__)
   end
 
   @impl true 
-  def init(_args \\ %{}) do 
+  def init(args \\ []) do 
 
-    base_children = []
+    base_children = [
     #   {Config, args}, 
-    #   {State, args} 
-    # ]
-
-    test_children = []
-    #   {Manager, args}, 
-    #   {Worker, args}
-    # ]
+    #   {State, args}, 
+      {Runner, [streamio: true, prompt: "bong > "]}, 
+      {Monitor, args}
+    ]
 
     children = case Application.get_env(:superwatch, :env) do
-      :test -> test_children 
-      _  -> base_children ++ test_children
+      :test -> []
+      _  -> base_children
     end
-
-    # IO.inspect(children, label: "STARTUP CHILDREN") 
-
-    # MuonTrap.Port.cmd(asdf)
 
     Supervisor.init(children, strategy: :one_for_one)
   end
