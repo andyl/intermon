@@ -80,6 +80,16 @@ defmodule Superwatch.Background.Runner do
   # ----- callbacks 
 
   @impl true 
+  def handle_info({_ref, _data}, state) do 
+    {:noreply, state}
+  end
+
+  @impl true 
+  def handle_info({:DOWN, _ref, :process, _pid, :normal}, state) do 
+    {:noreply, state}
+  end
+
+  @impl true 
   def handle_call({:start, opts}, _from, state) do 
     optsmap = opts |> to_map() 
     if state.task, do: Task.shutdown(state.task, :brutal_kill)
