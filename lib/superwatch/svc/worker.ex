@@ -1,10 +1,10 @@
-defmodule Superwatch.Background.Worker do
+defmodule Superwatch.Svc.Worker do
 
   use GenServer
 
   defstruct [:task, :cmd, :prompt, :clearscreen]
 
-  alias Superwatch.Background.Worker
+  alias Superwatch.Svc.Worker
 
   @moduledoc """
   Worker - content TBD

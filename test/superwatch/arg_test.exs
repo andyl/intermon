@@ -1,31 +1,31 @@
-defmodule Superwatch.OptTest do
+defmodule Superwatch.ArgTest do
   use ExUnit.Case
 
-  # alias Superwatch.Opt
+  # alias Superwatch.Arg
 
   # describe "#gen" do
   #   test "with complete map" do 
-  #     opt = opt_map() |> Opt.gen() 
+  #     opt = opt_map() |> Arg.gen() 
   #     assert opt
   #   end
   # end
   #
   # describe "#set" do
   #   test "with input value" do 
-  #     opt1 = opt_map() |> Opt.gen() 
+  #     opt1 = opt_map() |> Arg.gen() 
   #     refute opt1.value
-  #     opt2 = opt1 |> Opt.set("asdf")
+  #     opt2 = opt1 |> Arg.set("asdf")
   #     assert opt2.value == "asdf"
   #   end
   # end
   #
   # describe "#clear" do
   #   test "with input value" do 
-  #     opt1 = opt_map() |> Opt.gen() 
+  #     opt1 = opt_map() |> Arg.gen() 
   #     refute opt1.value
-  #     opt2 = opt1 |> Opt.set("asdf")
+  #     opt2 = opt1 |> Arg.set("asdf")
   #     assert opt2.value == "asdf"
-  #     opt3 = opt2 |> Opt.clear()
+  #     opt3 = opt2 |> Arg.clear()
   #     refute opt3.value 
   #   end
   # end

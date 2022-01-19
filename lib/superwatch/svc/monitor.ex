@@ -1,4 +1,4 @@
-defmodule Superwatch.Background.Monitor do
+defmodule Superwatch.Svc.Monitor do
 
   use GenServer
 
@@ -6,8 +6,8 @@ defmodule Superwatch.Background.Monitor do
 
   @debounce_timeout 250
 
-  alias Superwatch.Background.Monitor
-  alias Superwatch.Background.Worker
+  alias Superwatch.Svc.Monitor
+  alias Superwatch.Svc.Worker
 
   @moduledoc """
   Monitor - content TBD

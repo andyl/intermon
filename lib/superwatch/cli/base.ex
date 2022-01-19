@@ -1,8 +1,9 @@
 defmodule Superwatch.Cli.Base do
 
-  alias Superwatch.Background.Manager
-  alias Superwatch.Background.Worker
-  alias Superwatch.Background.Monitor
+  alias Superwatch.Sys
+
+  alias Superwatch.Svc.Worker
+  alias Superwatch.Svc.Monitor
   alias Superwatch.Cli.Base
   alias Superwatch.Cli.Repl
 
@@ -33,8 +34,8 @@ defmodule Superwatch.Cli.Base do
   end
 
   def start do 
-    cmd = Manager.command()
-    Worker.set(cmd: cmd, clearscreen: true, prompt: Manager.prompt())
+    cmd = Sys.command()
+    Worker.set(cmd: cmd, clearscreen: true, prompt: Sys.prompt())
     Monitor.start()
     Worker.start()
     Repl.start()

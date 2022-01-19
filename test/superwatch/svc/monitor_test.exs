@@ -1,8 +1,8 @@
-defmodule Superwatch.Background.MonitorTest do
+defmodule Superwatch.Svc.MonitorTest do
 
   use ExUnit.Case
 
-  alias Superwatch.Background.Monitor
+  alias Superwatch.Svc.Monitor
 
   describe "GenServer init" do
     test "with start_supervised" do

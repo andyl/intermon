@@ -1,4 +1,4 @@
-defmodule Superwatch.User.Config do
+defmodule Superwatch.Svc.User.Config do
 
   use GenServer 
 

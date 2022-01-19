@@ -1,32 +1,25 @@
 ---
 ex_unit:
   desc: ExUnit for Elixir Project
-  monitor_dirs:   "lib,test,apps"
-  monitor_ftypes: "ex,eex,heex"
-  monitor_filter: ""
-  worker_clearscreen: true 
-  worker_command: "mix test <%= worker_flags %> <%= worker_opts %> --stale"
-  worker_flags:
+  dirs: "lib,test,apps"
+  ftypes: "ex,eex,heex"
+  filter: 
+  clearscreen: true 
+  command: "mix test <%= flags %> <%= opts %>"
+  flags:
     focus: 
       shortname: f
-      shortdoc: Run only focus tests
-      doc: |
-        Only run specific tests, using ExUnit's `tag` feature
-
-            @tag focus
-            test "mytest" do 
-              assert 1 == 1
-            end
+      desc: Run only focus tests
       default: false
       output: "--only focus:true" 
-  worker_opts:
+    stale: 
+      shortname: s
+      shortdoc: Run only changed tests
+      default: false
+      output: "--stale" 
+  args: 
     only: 
       shortname: o
       shortdoc: Only run tests that match the filter
       default: false
       output: "--only <%= value %>" 
-
-ex_unit_umbrella: 
-  include: [ex_unit]
-  desc: ExUnit for Elixir Umbrella Project
-

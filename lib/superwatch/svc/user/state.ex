@@ -1,4 +1,4 @@
-defmodule Superwatch.User.State do
+defmodule Superwatch.Svc.User.State do
 
   use GenServer 
 

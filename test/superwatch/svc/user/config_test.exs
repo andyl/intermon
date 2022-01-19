@@ -1,7 +1,7 @@
-defmodule Superwatch.User.ConfigTest do
+defmodule Superwatch.Svc.User.ConfigTest do
   use ExUnit.Case
 
-  alias Superwatch.User.Config
+  alias Superwatch.Svc.User.Config
 
   describe "GenServer init" do
     test "with start_supervised" do

@@ -16,7 +16,7 @@ defmodule Intermon.MixProject do
   def application do
     [
       extra_applications: [:logger, :muontrap],
-      mod: {Superwatch.Background.Application, []}, 
+      mod: {Superwatch.Svc.Application, []}, 
     ]
   end
 
@@ -25,7 +25,8 @@ defmodule Intermon.MixProject do
       {:muontrap, "~> 1.0"}, 
       {:yaml_elixir, "~> 2.8"}, 
       {:file_system, "~> 0.2"}, 
-      {:ymlr, "~> 2.0"}
+      {:ymlr, "~> 2.0"}, 
+      {:table_rex, "~> 3.1"}
     ]
   end
 

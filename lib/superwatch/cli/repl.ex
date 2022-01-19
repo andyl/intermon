@@ -1,8 +1,8 @@
 defmodule Superwatch.Cli.Repl do
 
-  alias Superwatch.Background.Worker
-  alias Superwatch.Background.Monitor
-  alias Superwatch.Background.Manager
+  alias Superwatch.Svc.Worker
+  alias Superwatch.Svc.Monitor
+  alias Superwatch.Sys
 
   def start() do
     loop() 
@@ -35,7 +35,7 @@ defmodule Superwatch.Cli.Repl do
     )
   end
 
-  defdelegate prompt, to: Manager
+  defdelegate prompt, to: Sys
 
   defp do_prompt do 
     prompt() |> IO.write()

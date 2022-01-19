@@ -4,6 +4,7 @@ defmodule Superwatch.Agent do
   alias Superwatch.Flag
   alias Superwatch.Opt
 
+
   defstruct [
     :name, 
     :desc, 

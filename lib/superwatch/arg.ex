@@ -1,6 +1,6 @@
-defmodule Superwatch.Opt do
+defmodule Superwatch.Arg do
 
-  alias Superwatch.Opt
+  alias Superwatch.Arg
 
   defstruct [:name, :shortname, :shortdoc, :doc, :output, :value]
 
@@ -9,7 +9,7 @@ defmodule Superwatch.Opt do
   end
 
   def gen(name, data) do 
-    %Opt{
+    %Arg{
       name: name, 
       shortname: Map.get(data, "shortname", ""), 
       shortdoc: Map.get(data, "shortdoc", ""), 
@@ -32,11 +32,11 @@ defmodule Superwatch.Opt do
   end
 
   def set(old, value) do 
-    %Opt{old | value: value}
+    %Arg{old | value: value}
   end
 
   def clear(old) do 
-    %Opt{old | value: nil}
+    %Arg{old | value: nil}
   end
   
 end

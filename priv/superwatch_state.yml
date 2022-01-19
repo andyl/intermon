@@ -1,7 +1,6 @@
 ---
-  agent: "ex_unit"
-  worker_flags:  "focus"
-  worker_opts:   ""
-  monitor_flags: ""
-  monitor_opts:  ""
-
+ex_unit:
+  flags: 
+    focus: true
+  args:
+    only: "bing"

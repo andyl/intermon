@@ -1,8 +1,8 @@
-defmodule Superwatch.Background.WorkerTest do
+defmodule Superwatch.Svc.WorkerTest do
 
   use ExUnit.Case
 
-  alias Superwatch.Background.Worker
+  alias Superwatch.Svc.Worker
   import ExUnit.CaptureIO
 
   describe "GenServer init" do

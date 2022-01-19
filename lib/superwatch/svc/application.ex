@@ -1,4 +1,4 @@
-defmodule Superwatch.Background.Application do
+defmodule Superwatch.Svc.Application do
   @moduledoc false
 
   use Application
@@ -6,7 +6,7 @@ defmodule Superwatch.Background.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {Superwatch.Background.Supervisor, %{}}
+      {Superwatch.Svc.Supervisor, %{}}
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__]

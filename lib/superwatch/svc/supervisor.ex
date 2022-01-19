@@ -1,9 +1,8 @@
-defmodule Superwatch.Background.Supervisor do
+defmodule Superwatch.Svc.Supervisor do
   use Supervisor 
 
-  # alias Superwatch.User.{Config, State}
-  # alias Superwatch.Background.{Manager, Worker}
-  alias Superwatch.Background.{Worker, Monitor}
+  # alias Superwatch.Svc.User.{Config, State}
+  alias Superwatch.Svc.{Worker, Monitor}
 
   def start_link(_args) do 
     Supervisor.start_link(__MODULE__, [], name: __MODULE__)
