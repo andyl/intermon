@@ -7,7 +7,6 @@ defmodule Intermon.MixProject do
       version: "0.0.1",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      escript: escript(), 
       aliases: aliases(), 
       deps: deps()
     ]
@@ -30,15 +29,9 @@ defmodule Intermon.MixProject do
     ]
   end
 
-  defp escript do 
-    [
-      main_module: Superwatch.Cli.Escript
-    ]
-  end
-
   defp aliases do
     [
-      repl: ["run -e Superwatch.Cli.Escript.start"]
+      repl: ["run -e Superwatch.Cli.Base.start"]
     ]
   end
 end

@@ -3,7 +3,7 @@ defmodule Superwatch.Background.Supervisor do
 
   # alias Superwatch.User.{Config, State}
   # alias Superwatch.Background.{Manager, Worker}
-  alias Superwatch.Background.{Runner, Monitor}
+  alias Superwatch.Background.{Worker, Monitor}
 
   def start_link(_args) do 
     Supervisor.start_link(__MODULE__, [], name: __MODULE__)
@@ -15,7 +15,7 @@ defmodule Superwatch.Background.Supervisor do
     base_children = [
     #   {Config, args}, 
     #   {State, args}, 
-      {Runner, [streamio: true, prompt: "bong > "]}, 
+      {Worker, [prompt: "Superwatch > "]}, 
       {Monitor, args}
     ]
 

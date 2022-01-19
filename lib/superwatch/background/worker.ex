@@ -1,62 +1,61 @@
 defmodule Superwatch.Background.Worker do
+
   use GenServer
 
-  defstruct [:pid, :cmd]
+  defstruct [:task, :cmd, :prompt, :clearscreen]
 
-  alias Superwatch.Background.{Worker, Manager}
+  alias Superwatch.Background.Worker
 
-  # ----- startup / shutdown
+  @moduledoc """
+  Worker - content TBD
+  """
 
-  def start_link(cmd \\ "") do 
-    launch_cmd = case cmd do 
-      "" -> Manager.command 
-      cmd -> cmd
-    end
-    GenServer.start_link(__MODULE__, launch_cmd, name: __MODULE__)
+  # ----- startup / shutdown 
+
+  def start_link, do: start_link([])
+
+  def start_link(cmd) when is_binary(cmd) do
+    start_link([cmd: cmd])
   end
 
-  def init do 
-    init("")
-  end 
+  def start_link(opts) when is_list(opts) do 
+    state = opts |> set_state()
+    GenServer.start_link(__MODULE__, state, name: __MODULE__)
+  end
 
-  @impl true
-  def init(cmd) when is_binary(cmd) do
-    pid = case cmd do
-      "" -> nil
+  @impl true 
+  def init(opts) do
+    task = case opts.cmd do 
+      nil -> nil
+      ""  -> nil
       cmd -> start_cmd(cmd)
     end
-    {:ok, %Worker{cmd: cmd, pid: pid}}
+    new_opts = %{opts | task: task}
+    {:ok, set_state(new_opts)}
   end
 
-  def init(cmd) when is_map(cmd) do
-    Manager.command() |> init()
+  # ----- api 
+
+  def start, do: start([])
+
+  def start(cmd) when is_binary(cmd) do 
+    start([cmd: cmd])
   end
 
-  @impl true 
-  def terminate(_reason, %{pid: nil} = _state) do
-    IO.puts "TERMINATE NOPORT"
-    :normal
-  end
-
-  @impl true 
-  def terminate(_reason, %{pid: _pid} = _state) do
-    # IO.inspect(pid, label: "TERMINATE PORT") 
-    # IO.inspect(state, label: "TERMINATE STATE") 
-    :normal
-  end
-
-  # ----- api
-
-  def start do 
-    Manager.command() |> start()
-  end
-  
-  def start(cmd) do 
-    GenServer.call(__MODULE__, {:start, cmd}) 
+  def start(opts) when is_list(opts) do 
+    GenServer.call(__MODULE__, {:start, opts}) 
   end
 
   def stop do
     GenServer.call(__MODULE__, :stop)
+  end
+
+  def exit do
+    GenServer.cast(__MODULE__, :exit)
+  end
+
+  def set(opts) when is_list(opts) do 
+    GenServer.call(__MODULE__, {:set, opts}) 
   end
   
   def state do
@@ -64,11 +63,15 @@ defmodule Superwatch.Background.Worker do
   end
 
   def running? do 
-    GenServer.call(__MODULE__, :pid)
+    GenServer.call(__MODULE__, :task)
   end
 
-  def pid do 
-    GenServer.call(__MODULE__, :pid)
+  def task do 
+    GenServer.call(__MODULE__, :task)
+  end
+
+  def task_await do 
+    GenServer.call(__MODULE__, :task_await)
   end
 
   def pidinfo do 
@@ -78,16 +81,40 @@ defmodule Superwatch.Background.Worker do
   # ----- callbacks 
 
   @impl true 
-  def handle_call({:start, cmd}, _from, %{pid: old_pid} = state) do 
-    if old_pid, do: stop_cmd(old_pid)
-    new_pid = start_cmd(cmd)
-    {:reply, :ok, %Worker{state | cmd: cmd, pid: new_pid}}
+  def handle_info({_ref, _data}, state) do 
+    {:noreply, state}
   end
 
   @impl true 
-  def handle_call(:stop, _from, %{pid: old_pid} = state) do 
-    if old_pid, do: stop_cmd(old_pid)
-    {:reply, :ok, %Worker{state | cmd: "", pid: nil}}
+  def handle_info({:DOWN, _ref, :process, _pid, :normal}, state) do 
+    {:noreply, state}
+  end
+
+  @impl true 
+  def handle_call({:start, opts}, _from, state) do 
+    optsmap = opts |> to_map() 
+    if state.task, do: Task.shutdown(state.task, :brutal_kill)
+    new_state = state |> Map.merge(optsmap)
+    new_task = new_state |> start_cmd() 
+    {:reply, new_task, %{new_state | task: new_task}}
+  end
+
+  @impl true 
+  def handle_call(:stop, _from, state) do 
+    if state.task do
+      stop_cmd(state)
+      if state.prompt do 
+        IO.write(state.prompt) 
+      end
+    end
+    {:reply, :ok, %Worker{state | task: nil}}
+  end
+
+  @impl true
+  def handle_call({:set, opts}, _from, state) do 
+    optsmap = opts |> to_map()
+    new_state = Map.merge(state, optsmap)
+    {:reply, new_state, new_state}
   end
 
   @impl true
@@ -96,30 +123,83 @@ defmodule Superwatch.Background.Worker do
   end
 
   @impl true
-  def handle_call(:pid, _from, %{pid: pid} = state) do 
-    {:reply, pid, state}
+  def handle_call(:task, _from, %{task: task} = state) do 
+    {:reply, task, state}
   end
 
   @impl true
-  def handle_call(:pidinfo, _from, %{pid: pid} = state) do 
-    info = Process.info(pid)
+  def handle_call(:task_await, _from, %{task: task} = state) do 
+    result = case task do 
+      nil -> nil 
+      value -> Task.await(value) 
+    end
+    {:reply, result, state}
+  end
+
+  @impl true
+  def handle_call(:pidinfo, _from, %{task: task} = state) do 
+    info = case task do 
+      nil -> nil
+      task -> Process.info(task.pid)
+    end
     {:reply, info, state}
+  end
+
+  @impl true
+  def handle_cast(:exit, state) do 
+    if state.task && state.prompt do
+      IO.write(state.prompt) 
+    end
+    {:noreply, %Worker{state | task: nil}}
   end
   
   # ----- helpers
 
-  def start_cmd(cmd) do 
-    # cmd |> IO.inspect(label: "START_CMD") 
-    [cmd | args] = cmd |> OptionParser.split() #|> IO.inspect(label: "START_MuT")
-    spawn(fn -> 
-      MuonTrap.cmd(cmd, args, into: Util.Io.stream())
+  defp start_cmd(%{cmd: nil} = _state) do 
+    nil
+  end 
+
+  defp start_cmd(state) do 
+    [cmd | args] = state.cmd |> OptionParser.split() 
+    clearscreen = "\x1Bc"
+    if state.clearscreen, do: IO.write(clearscreen)
+    Task.async(fn -> 
+      result = MuonTrap.cmd(cmd, args, into: IO.stream())
+      exit()
+      result
     end)
   end
 
-  def stop_cmd(nil), do: :ok 
+  defp stop_cmd(nil), do: :ok 
 
-  def stop_cmd(pid) do 
-    Process.exit(pid, :kill)
+  defp stop_cmd(state) do 
+    Task.shutdown(state.task, :brutal_kill)
+  end
+
+  defp set_state(opts) when is_map(opts) do 
+    %Worker{
+      task:        Map.get(opts, :task, nil), 
+      cmd:         Map.get(opts, :cmd, nil), 
+      prompt:      Map.get(opts, :prompt, nil), 
+      clearscreen: Map.get(opts, :clearscreen, nil)
+    }
+  end
+
+  defp set_state(opts) when is_list(opts) do 
+    %Worker{
+      task:        Keyword.get(opts, :task, nil), 
+      cmd:         Keyword.get(opts, :cmd, nil), 
+      prompt:      Keyword.get(opts, :prompt, nil), 
+      clearscreen: Keyword.get(opts, :clearscreen, nil)
+    }
+  end
+
+  defp to_map(opts) when is_list(opts) do 
+    opts |> Enum.into(%{})
+  end
+
+  defp to_map(opts) when is_map(opts) do 
+    opts
   end
   
 end

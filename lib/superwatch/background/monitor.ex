@@ -7,7 +7,7 @@ defmodule Superwatch.Background.Monitor do
   @debounce_timeout 250
 
   alias Superwatch.Background.Monitor
-  alias Superwatch.Background.Runner
+  alias Superwatch.Background.Worker
 
   @moduledoc """
   Monitor - content TBD
@@ -80,7 +80,7 @@ defmodule Superwatch.Background.Monitor do
 
   @impl true 
   def handle_info(:tripwire_exec, state) do 
-    Runner.start()
+    Worker.start()
     {:noreply, %{state | tripwire: nil}}
   end
 

@@ -36,14 +36,12 @@ defmodule Superwatch.Background.Manager do
     "Superwatch ('?' for help) > "
   end
 
+
   def command do 
-    wcmd = "mix test --stale --color; echo ---"
-    # wcmd = "mix compile --color; echo ---"
+    wcmd = "mix test --stale --color"
+    # wcmd = "mix compile --color"
     # wcmd = ~s(echo ""; echo CHANGE DETECTED; echo ---)
-    case "ex_unit" do 
-      "ex_unit" -> ~s[watchexec -c -w lib -w test -e ex,exs,eex,heex "#{wcmd}"]
-      "ex_unit_umbrella" -> ~s[watchexec -w apps -e ex,exs,eex,heex "#{wcmd}"]
-    end 
+    wcmd
   end
 
   def status do
