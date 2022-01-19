@@ -1,14 +1,20 @@
-# Superwatch TODO
+# Superwatch 
 
-## Misc
+## TODO
 
-- [ ] Fix CaptureIO (Process Leader...)
-- [ ] Remove streamio from state
+- [ ] Add tab completion
+
+## 2022 Jan 18 Tue
+
+- [x] Drop Worker 
+- [x] Rename runner to worker
+- [x] Fix CaptureIO (Process Leader...)
+- [x] Remove streamio from state
 
 ## NA
 
-- [ ] Implement Manager
-- [ ] Drop Worker 
+- [ ] Implement Manager as Module not Escript
 
 - [ ] Config?
 - [ ] State?
+

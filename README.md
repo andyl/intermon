@@ -1,24 +1,17 @@
 # Superwatch
 
-Superwatch is an Elixir script that provides interactive supervision for file
-monitor programs like [fswatch][f], [entr][e] and [watchexec][w].
+Superwatch provides interactive supervision for file monitor and worker
+programs.  Superwatch is useful for software development, watching for file
+changes and automatically running regression tests.
 
-Superwatch supports multiple test configurations for Elixir projects:
+## Downloading Superwatch
 
-- Monitors: file change monitor program like `fswatch`
-- Workers: worker program like `mix test`
-- Agents: blocks that defines interactive Monitor / Worker options
+Superwatch is available as a standalone executable.  Location TBD.
 
 ## Getting Started
 
-    > #install superwatch 
-    > mix escript.install hex superwatch 
-    >
     > # get help
     > superwatch help
-    >
-    > # check for installed Monitor programs
-    > superwatch check 
     >
     > # generate a superwatch config file
     > superwatch init 
@@ -76,9 +69,7 @@ your `.gitignore` file.
 
 ## Comparable Projects
 
-There are several excellent file monitor programs.  These are typically used
-during development to run tests automatically every time a source or test file
-is saved.
+Here are some excellent file watcher programs.  
 
 |----------------------------|------------|--------------|
 | Project                    | Language   | Interactive? |

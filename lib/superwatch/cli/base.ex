@@ -1,6 +1,9 @@
 defmodule Superwatch.Cli.Base do
 
+  alias Superwatch.Background.Manager
   alias Superwatch.Background.Worker
+  alias Superwatch.Background.Monitor
+  alias Superwatch.Cli.Base
   alias Superwatch.Cli.Repl
 
   def main([]) do 
@@ -10,7 +13,7 @@ defmodule Superwatch.Cli.Base do
   def main([arg]) do
     case arg do 
       "init"  -> init()
-      "start" -> Superwatch.Cli.Repl.start()
+      "start" -> Base.start()
       "help"  -> help()
       arg -> IO.puts("Unrecognized: #{arg} (try 'superwatch help')")
     end
@@ -30,8 +33,9 @@ defmodule Superwatch.Cli.Base do
   end
 
   def start do 
-    cmd = Superwatch.Background.Manager.command()
-    Worker.set(cmd: cmd, prompt: "Superwatch > ", clearscreen: true)
+    cmd = Manager.command()
+    Worker.set(cmd: cmd, clearscreen: true, prompt: Manager.prompt())
+    Monitor.start()
     Worker.start()
     Repl.start()
   end
