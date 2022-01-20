@@ -18,10 +18,6 @@ defmodule Superwatch.Cli.BaseTest do
     test "with help arg" do 
       assert capture_io(fn -> Base.main(~w(help)) end) =~ "Superwatch Help"
     end
-
-    test "with init arg" do 
-      assert capture_io(fn -> Base.main(~w(init)) end) =~ "INIT"
-    end
   end
 
   describe "#help" do
