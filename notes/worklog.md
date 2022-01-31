@@ -1,11 +1,19 @@
 # Superwatch 
 
-## TODO
+## CLI Challenge
 
-- [ ] Add tab completion
-- [ ] Add release config 
-- [ ] Add Burrito config 
-- [ ] Create release page with burrito executables
+Wanted: getch, readline, tab completion
+
+Notes:
+- impossible with gets
+- impossible with nif 
+- seems impossible with port (exe can't read stdin..)
+- could it be done with NCurses?  (one-line? full-screen?)
+- And yet: IEx does it!
+
+Approach:
+- near term: gets-style CLI only
+- long term: study IEx, emulate it's features, release as lib
 
 ## 2022 Jan 18 Tue
 
@@ -21,7 +29,22 @@
 - [x] Refactor module names
 - [x] Create CLI framework
 
-## NA
+## 2022 Jan 31 Mon
 
-- [ ] Build out help system 
+- [x] Short-term Elixir CLI: no tab completion
+
+## TODO
+
+Near Term: 
+- [ ] finish help system 
+- [ ] update state
+- [ ] finish runner
+
+Release:
+- [ ] Add release config 
+- [ ] Add Burrito config 
+- [ ] Create release page with burrito executables
+
+Long Term:
+- [ ] Add tab completion
 

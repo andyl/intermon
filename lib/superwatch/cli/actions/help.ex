@@ -1,7 +1,21 @@
 defmodule Superwatch.Cli.Actions.Help do
   
-  def handle(["?"]    = _args), do: do_help()
-  def handle(["help"] = _args), do: do_help()
+  def handle(["?"]    = _args), do: handle(~w(help))
+  def handle(["help"] = _args) do
+    IO.puts(
+      """
+
+      Superwatch Options
+        run           - rerun worker 
+        state         - show REPL state
+        reset         - reset Agent
+        exit          - quit Superwatch
+        help <option> - help on an Option
+
+      """
+    )
+    do_prompt()
+  end
 
   # ----- unhandled input
 
@@ -15,19 +29,4 @@ defmodule Superwatch.Cli.Actions.Help do
   
   defdelegate do_prompt, to: Superwatch.Cli.Repl
 
-  defp do_help do
-    IO.puts(
-      """
-
-      Superwatch Help
-        <CR>    - rerun worker 
-        state   - show REPL state
-        exit    - quit Superwatch
-        reset   - reset Agent
-        ?       - help (this command)
-      """
-    )
-    do_prompt()
-  end
-  
 end
