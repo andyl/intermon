@@ -42,7 +42,7 @@ Approach:
 
 Editor:
 - [ ] Make a util/editor module 
-- [ ] Add an Editor.launch function 
+- [ ] Add an editor.launch function 
 
 Agent Command: 
 - [ ] initialize a config file 
