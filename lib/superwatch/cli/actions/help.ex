@@ -8,7 +8,7 @@ defmodule Superwatch.Cli.Actions.Help do
       Superwatch Options
         run           - rerun worker
         state         - show REPL state
-        agent         - list, load, save Agents
+        agent         - list, edit, select agents
         set           - set Agent options
         reset         - reset Agent defaults
         exit          - quit Superwatch
@@ -46,11 +46,11 @@ defmodule Superwatch.Cli.Actions.Help do
     IO.puts(
       """
 
-      agent - manage agents: list/save/use
+      agent - manage agents: list/edit/select
 
         agent list           - list currently defined agents
         agent edit           - edit agents config file (~/.superwatch.yml)
-        agent use <agent>    - use an agent
+        agent select <agent> - use an agent
       """
     )
     do_prompt()
