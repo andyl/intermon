@@ -38,18 +38,18 @@ Approach:
 - [x] add help system 
 - [x] successful test with Ports launching Nvim 
 
+## 2022 Feb 02 Wed
+
+- [x] Make a util/editor module 
+- [x] Add an editor.launch function 
+
 ## TODO
 
-Editor:
-- [ ] Make a util/editor module 
-- [ ] Add an editor.launch function 
-
 Agent Command: 
-- [ ] initialize a config file 
-- [ ] read agents from config file 
+- [ ] read agents from config file (agent select)
 - [ ] read agent from config file 
 
-Set & State Commnand: 
+Set & State Command: 
 - [ ] read state 
 - [ ] write state 
 
