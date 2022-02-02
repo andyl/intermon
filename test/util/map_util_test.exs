@@ -1,8 +1,8 @@
 defmodule Util.MapUtilTest do
 
-  use ExUnit.Case 
+  use ExUnit.Case
 
-  alias Util.MapUtil 
+  alias Util.MapUtil
 
   test "flat map" do
     old = %{"a" => 1, :b => 2}
@@ -34,7 +34,7 @@ defmodule Util.MapUtilTest do
     assert MapUtil.atomify_keys(old) == new
   end
 
-  test "failure case" do 
+  test "failure case" do
     old = %{
       "ex_unit" => %{
         "desc" => "ExUnit for Elixir Project",
@@ -65,7 +65,7 @@ defmodule Util.MapUtilTest do
         "monitor_command" => "watchexec -c -w apps -e ex,exs,eex,heex \"<%= worker_command %>\""
       }
     }
-    assert MapUtil.atomify_keys(old) 
+    assert MapUtil.atomify_keys(old)
   end
 
 

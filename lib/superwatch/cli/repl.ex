@@ -6,12 +6,12 @@ defmodule Superwatch.Cli.Repl do
   alias Superwatch.Cli.Actions
 
   def start() do
-    loop() 
+    loop()
   end
 
   defp loop do
-    result = IO.gets("") |> String.trim()
-    case result do 
+    prompt_input = IO.gets("") |> String.trim()
+    case prompt_input do
       "exit"  -> do_exit()
       "xx"    -> do_exit()
       ""      -> do_worker()
@@ -23,10 +23,10 @@ defmodule Superwatch.Cli.Repl do
 
   # ----- helpers
 
-  def do_prompt do 
+  def do_prompt do
     Superwatch.Sys.prompt() |> IO.write()
   end
-  
+
   # ----- private
 
   defp do_worker do
@@ -38,9 +38,9 @@ defmodule Superwatch.Cli.Repl do
     System.halt(0)
   end
 
-  defp do_state do 
-    IO.inspect(Worker.state(), label: "WORKER") 
-    IO.inspect(Monitor.state(), label: "MONITOR") 
+  defp do_state do
+    IO.inspect(Worker.state(), label: "WORKER")
+    IO.inspect(Monitor.state(), label: "MONITOR")
     do_prompt()
   end
 end

@@ -33,10 +33,27 @@ Approach:
 
 - [x] Short-term Elixir CLI: no tab completion
 
+## 2022 Feb 01 Tue
+
+- [x] add help system 
+- [x] successful test with Ports launching Nvim 
+
 ## TODO
 
+Editor:
+- [ ] Make a util/editor module 
+- [ ] Add an Editor.launch function 
+
+Agent Command: 
+- [ ] initialize a config file 
+- [ ] read agents from config file 
+- [ ] read agent from config file 
+
+Set & State Commnand: 
+- [ ] read state 
+- [ ] write state 
+
 Near Term: 
-- [ ] finish help system 
 - [ ] update state
 - [ ] finish runner
 
