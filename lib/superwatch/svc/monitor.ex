@@ -6,6 +6,8 @@ defmodule Superwatch.Svc.Monitor do
 
   @debounce_timeout 250
 
+  @proc_name :monitor_proc
+
   alias Superwatch.Svc.Monitor
   alias Superwatch.Svc.Worker
 
@@ -36,7 +38,7 @@ defmodule Superwatch.Svc.Monitor do
 
   def start_link(opts) when is_list(opts) do
     state = opts |> set_state()
-    GenServer.start_link(__MODULE__, state, name: __MODULE__)
+    GenServer.start_link(__MODULE__, state, name: @proc_name)
   end
 
   @impl true
@@ -46,34 +48,34 @@ defmodule Superwatch.Svc.Monitor do
 
   # ----- api
 
-  def start, do: start([])
+  def api_start, do: api_start([])
 
-  def start(opts) when is_list(opts) do
-    GenServer.call(__MODULE__, {:start, opts})
+  def api_start(opts) when is_list(opts) do
+    GenServer.call(@proc_name, {:start, opts})
   end
 
-  def stop do
-    GenServer.call(__MODULE__, :stop)
+  def api_stop do
+    GenServer.call(@proc_name, :stop)
   end
 
-  def state do
-    GenServer.call(__MODULE__, :state)
+  def api_state do
+    GenServer.call(@proc_name, :state)
   end
 
-  def set(opts) when is_list(opts) do
-    GenServer.call(__MODULE__, {:set, opts})
+  def api_set(opts) when is_list(opts) do
+    GenServer.call(@proc_name, {:set, opts})
   end
 
-  def running? do
-    GenServer.call(__MODULE__, :pid)
+  def api_running? do
+    GenServer.call(@proc_name, :pid)
   end
 
-  def pid do
-    GenServer.call(__MODULE__, :pid)
+  def api_pid do
+    GenServer.call(@proc_name, :pid)
   end
 
-  def pidinfo do
-    GenServer.call(__MODULE__, :pidinfo)
+  def api_pidinfo do
+    GenServer.call(@proc_name, :pidinfo)
   end
 
   # ----- callbacks
@@ -91,7 +93,7 @@ defmodule Superwatch.Svc.Monitor do
 
   @impl true
   def handle_info(:tripwire_exec, state) do
-    Worker.start()
+    Worker.api_start()
     {:noreply, %{state | tripwire: nil}}
   end
 

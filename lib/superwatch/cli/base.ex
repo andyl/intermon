@@ -1,14 +1,14 @@
 defmodule Superwatch.Cli.Base do
 
-  alias Superwatch.Org
+  alias Superwatch.Api
   alias Superwatch.Cli.Repl
 
-  def main([]) do 
+  def main([]) do
     help()
   end
 
   def main([arg]) do
-    case arg do 
+    case arg do
       "start" -> start()
       "help"  -> help()
       arg -> IO.puts("Unrecognized: #{arg} (try 'superwatch help')")
@@ -23,8 +23,8 @@ defmodule Superwatch.Cli.Base do
     """
   end
 
-  def start do 
-    Org.start()
+  def start do
+    Api.start()
     Repl.start()
   end
 end

@@ -5,7 +5,7 @@ defmodule Superwatch.Cli.Actions.Core do
   def handle(["?" | _]     = args), do: Actions.Help.handle(args)
   def handle(["help" | _]  = args), do: Actions.Help.handle(args)
   def handle(["agent" | _] = args), do: Actions.Agent.handle(args)
-  def handle(["set" | _]   = args), do: Actions.Set.handle(args)
+  def handle(["prefs" | _] = args), do: Actions.Prefs.handle(args)
 
   def handle(~w(reset)), do: do_reset()
 
@@ -17,8 +17,8 @@ defmodule Superwatch.Cli.Actions.Core do
     do_prompt()
   end
 
-  # ----- helpers 
-  
+  # ----- helpers
+
   defdelegate do_prompt, to: Superwatch.Cli.Repl
 
   defp do_reset do
@@ -26,5 +26,5 @@ defmodule Superwatch.Cli.Actions.Core do
     do_prompt()
   end
 
-  
+
 end

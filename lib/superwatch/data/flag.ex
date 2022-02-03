@@ -1,6 +1,6 @@
-defmodule Superwatch.Flag do
+defmodule Superwatch.Data.Flag do
 
-  alias Superwatch.Flag
+  alias Superwatch.Data.Flag
 
   defstruct [:name, :shortname, :shortdoc, :doc, :output, :value]
 

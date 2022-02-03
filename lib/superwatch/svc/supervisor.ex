@@ -1,20 +1,20 @@
 defmodule Superwatch.Svc.Supervisor do
-  use Supervisor 
+  use Supervisor
 
-  # alias Superwatch.Svc.User.{Config, State}
+  alias Superwatch.Svc.User
   alias Superwatch.Svc.{Worker, Monitor}
 
-  def start_link(_args) do 
+  def start_link(_args) do
     Supervisor.start_link(__MODULE__, [], name: __MODULE__)
   end
 
-  @impl true 
-  def init(args \\ []) do 
+  @impl true
+  def init(args \\ []) do
 
     base_children = [
-    #   {Config, args}, 
-    #   {State, args}, 
-      {Worker, [prompt: "Superwatch > "]}, 
+      {User.Prefs, args},
+      {User.Agents, args},
+      {Worker, [prompt: "Superwatch > "]},
       {Monitor, args}
     ]
 

@@ -4,6 +4,8 @@ defmodule Superwatch.Svc.Worker do
 
   defstruct [:task, :cmd, :prompt, :clearscreen]
 
+  @proc_name :worker_proc
+
   alias Superwatch.Svc.Worker
 
   @moduledoc """
@@ -35,7 +37,7 @@ defmodule Superwatch.Svc.Worker do
 
   def start_link(opts) when is_list(opts) do
     state = opts |> set_state()
-    GenServer.start_link(__MODULE__, state, name: __MODULE__)
+    GenServer.start_link(__MODULE__, state, name: @proc_name)
   end
 
   @impl true
@@ -58,14 +60,14 @@ defmodule Superwatch.Svc.Worker do
 
   Can be passed an option set to update the state before launching the command.
   """
-  def start, do: start([])
+  def api_start, do: api_start([])
 
-  def start(cmd) when is_binary(cmd) do
-    start([cmd: cmd])
+  def api_start(cmd) when is_binary(cmd) do
+    api_start([cmd: cmd])
   end
 
-  def start(opts) when is_list(opts) do
-    GenServer.call(__MODULE__, {:start, opts})
+  def api_start(opts) when is_list(opts) do
+    GenServer.call(@proc_name, {:start, opts})
   end
 
   @doc """
@@ -73,53 +75,53 @@ defmodule Superwatch.Svc.Worker do
 
   Stops a running worker command.
   """
-  def stop do
-    GenServer.call(__MODULE__, :stop)
+  def api_stop do
+    GenServer.call(@proc_name, :stop)
   end
 
   @doc """
   Exit the Worker process.
   """
-  def exit do
-    GenServer.cast(__MODULE__, :exit)
+  def api_exit do
+    GenServer.cast(@proc_name, :exit)
   end
 
   @doc """
   Update the Worker state.
   """
-  def set(opts) when is_list(opts) do
-    GenServer.call(__MODULE__, {:set, opts})
+  def api_set(opts) when is_list(opts) do
+    GenServer.call(@proc_name, {:set, opts})
   end
 
   @doc """
   Return the Worker state.
   """
-  def state do
-    GenServer.call(__MODULE__, :state)
+  def api_state do
+    GenServer.call(@proc_name, :state)
   end
 
   @doc """
   Returns true if the Worker command is running.
   """
-  def running? do
-    GenServer.call(__MODULE__, :task)
+  def api_running? do
+    GenServer.call(@proc_name, :task)
   end
 
   @doc """
   Return the PID of the running worker command.
   """
-  def task do
-    GenServer.call(__MODULE__, :task)
+  def api_task do
+    GenServer.call(@proc_name, :task)
   end
 
   @doc false
-  def task_await do
-    GenServer.call(__MODULE__, :task_await)
+  def api_task_await do
+    GenServer.call(@proc_name, :task_await)
   end
 
   @doc false
-  def pidinfo do
-    GenServer.call(__MODULE__, :pidinfo)
+  def api_pidinfo do
+    GenServer.call(@proc_name, :pidinfo)
   end
 
   # ----- callbacks
@@ -211,7 +213,7 @@ defmodule Superwatch.Svc.Worker do
     if state.clearscreen, do: IO.write(clearscreen)
     Task.async(fn ->
       result = MuonTrap.cmd(cmd, args, into: IO.stream())
-      exit()
+      api_exit()
       result
     end)
   end

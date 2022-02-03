@@ -5,7 +5,7 @@ ex_unit:
   ftypes: "ex,eex,heex"
   filter: 
   clearscreen: true 
-  command: "mix test <%= flags %> <%= opts %>"
+  command: "mix test <%= flags %> <%= args %>"
   flags:
     focus: 
       shortname: f
@@ -23,3 +23,23 @@ ex_unit:
       shortdoc: Only run tests that match the filter
       default: false
       output: "--only <%= value %>" 
+rspec: 
+  desc: Rspec for Ruby Project
+  dirs: "lib,test,apps"
+  ftypes: "rb"
+  filter: 
+  clearscreen: true 
+  command: "mix test <%= flags %> <%= args %>"
+  flags:
+    focus: 
+      shortname: f
+      desc: Run only focus tests
+      default: false
+      output: "--only focus:true" 
+  args: 
+    only: 
+      shortname: o
+      shortdoc: Only run tests that match the filter
+      default: false
+      output: "--only <%= value %>" 
+

@@ -4,6 +4,18 @@ defmodule Util.MapUtilTest do
 
   alias Util.MapUtil
 
+  test "keyword list" do
+    old = [a: 1, b: 2]
+    new = %{a: 1, b: 2}
+    assert MapUtil.atomify_keys(old) == new
+  end
+
+  test "list of maps" do
+    old = [%{"a" => 1}, %{"b" => 2}]
+    new = [%{a: 1}, %{b: 2}]
+    assert MapUtil.atomify_keys(old) == new
+  end
+
   test "flat map" do
     old = %{"a" => 1, :b => 2}
     new = %{a: 1, b: 2}

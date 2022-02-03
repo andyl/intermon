@@ -1,5 +1,7 @@
 defmodule Superwatch.Cli.Actions.Agent do
 
+  alias Superwatch.Api
+
   @moduledoc """
   Agent - list, edit, select
   "agent save <name>
@@ -13,10 +15,10 @@ defmodule Superwatch.Cli.Actions.Agent do
   end
 
   def handle(["agent", "list"]) do
-    path = "~/.superwatch.yml" |> Path.expand()
-    exe  = "cat" |> System.find_executable()
-    {data, _status} = System.cmd(exe, [path])
-    IO.puts("\n" <> data <> "\n")
+    header = ~w(Agent Description)
+    rows = Api.agent_list()
+    TableRex.quick_render!(rows, header) <> "\n"
+    |> IO.puts()
     do_prompt()
   end
 

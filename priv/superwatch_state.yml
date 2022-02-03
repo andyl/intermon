@@ -1,6 +1,0 @@
----
-ex_unit:
-  flags: 
-    focus: true
-  args:
-    only: "bing"

@@ -7,10 +7,8 @@ defmodule Superwatch.Cli.Actions.Help do
 
       Superwatch Options
         run           - rerun worker
-        state         - show REPL state
-        agent         - list, edit, select agents
-        set           - set Agent options
-        reset         - reset Agent defaults
+        agent         - list / edit / select
+        prefs         - show / edit / reset
         exit          - quit Superwatch
         help <option> - help on an Option
 
@@ -31,12 +29,15 @@ defmodule Superwatch.Cli.Actions.Help do
     do_prompt()
   end
 
-  def handle(["help", "state" | _opts]) do
+  def handle(["help", "prefs" | _opts]) do
     IO.puts(
       """
 
-      state
-        return the current application state
+      prefs - manage preferences
+
+        prefs show  - show preferences
+        prefs edit  - edit preferences
+        prefs reset - reset preferences
       """
     )
     do_prompt()
@@ -46,7 +47,7 @@ defmodule Superwatch.Cli.Actions.Help do
     IO.puts(
       """
 
-      agent - manage agents: list/edit/select
+      agent - manage agents
 
         agent list           - list currently defined agents
         agent edit           - edit agents config file (~/.superwatch.yml)
@@ -93,7 +94,8 @@ defmodule Superwatch.Cli.Actions.Help do
 
   def handle(value) do
     output = Enum.join(value, " ")
-    IO.puts("\nUnknown help option (#{output})\n")
+    IO.puts("\nUnknown option ('#{output}')")
+    handle(~w(help))
     do_prompt()
   end
 

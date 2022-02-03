@@ -1,7 +1,6 @@
 defmodule Superwatch.Cli.Repl do
 
-  alias Superwatch.Svc.Worker
-  alias Superwatch.Svc.Monitor
+  alias Superwatch.Api
 
   alias Superwatch.Cli.Actions
 
@@ -12,10 +11,10 @@ defmodule Superwatch.Cli.Repl do
   defp loop do
     prompt_input = IO.gets("") |> String.trim()
     case prompt_input do
+      "prefs" -> do_prefs()
       "exit"  -> do_exit()
       "xx"    -> do_exit()
       ""      -> do_worker()
-      "state" -> do_state()
       value   -> value |> OptionParser.split() |> Actions.Core.handle()
     end
     loop()
@@ -30,7 +29,7 @@ defmodule Superwatch.Cli.Repl do
   # ----- private
 
   defp do_worker do
-    Worker.start()
+    Api.run()
   end
 
   defp do_exit do
@@ -38,9 +37,8 @@ defmodule Superwatch.Cli.Repl do
     System.halt(0)
   end
 
-  defp do_state do
-    IO.inspect(Worker.state(), label: "WORKER")
-    IO.inspect(Monitor.state(), label: "MONITOR")
+  defp do_prefs do
+    Api.prefs()
     do_prompt()
   end
 end
