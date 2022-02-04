@@ -28,4 +28,5 @@ defmodule Superwatch.ApiTest do
       assert Api.agent_list()
     end
   end
+
 end

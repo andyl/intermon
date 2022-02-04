@@ -61,15 +61,39 @@ Concept Work:
 - services register with a pre-defined name - easier testing
 - changed prefs from a map to a list
 
+## 2022 Feb 04 Fri
+
+New Architecture: 
+- merge prefs into agent 
+- one data structure: agent 
+
+Agent Organization: 
+- root store: ~/.superwatch.yml 
+- overlay store: ./.superwatch.yml 
+
+Ordering:
+- add a 'selected' field 
+- ordering doesn't matter - use maps for agents 
+
+Actions:
+- rename 'Svc.User' to 'Svc.Store'
+- rename 'Svc.User.Agents' to 'Svc.Store.Root' 
+- rename 'Svc.User.Prefs' to 'Svc.Store.Overlay'
+- move operations to Data.Agents 
+-- list 
+-- find 
+-- select 
+-- update 
+
 ## TODO
 
 Commands:
 - [x] run 
 - [x] agent list 
-- [x] agent edit 
+- [-] agent edit 
 - [ ] agent select 
-- [ ] prefs show 
-- [x] prefs edit 
+- [x] prefs show 
+- [-] prefs edit 
 - [ ] prefs reset 
 - [ ] exit 
 - [ ] help

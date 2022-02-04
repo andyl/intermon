@@ -34,8 +34,14 @@ defmodule Superwatch.Api do
     |> Enum.map(fn({name, val}) -> [name, val[:desc]] end)
   end
 
-  def agent_select do
-    Prefs.api_prefs()
+  def agent_select(target) do
+    with {:ok, agent} <- Agents.api_find(target),
+         {:ok, pref} <- Prefs.api_select(target, agent)
+    do
+      {:ok, pref}
+    else
+      _ -> {:error, "Not found (#{target})"}
+    end
   end
 
   # -- PREFS

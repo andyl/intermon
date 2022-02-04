@@ -50,6 +50,22 @@ defmodule Superwatch.Svc.User.Agents do
   end
 
   @doc """
+  Find an agent.
+  """
+  def api_find(target) when is_binary(target) do
+    target
+    |> MapUtil.atomify_keys()
+    |> api_find()
+  end
+
+  def api_find(target) when is_atom(target) do
+    case api_config()[target] do
+      nil -> :error
+      val -> {:ok, val}
+    end
+  end
+
+  @doc """
   Updates the config data.  Used for testing.
 
   Applies config opts to the current state.

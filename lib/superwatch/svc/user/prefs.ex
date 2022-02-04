@@ -56,6 +56,24 @@ defmodule Superwatch.Svc.User.Prefs do
     GenServer.call(@proc_name, :reset)
   end
 
+  @doc """
+  Selects a preference.
+
+  Steps:
+  - pull the target from the prefs list
+  - merge the target values onto the agent values
+  - prepend the new pref on the prefs list
+  - save the changes into the prefs file
+  """
+  # def api_select(target, agent) do
+  #   old_prefs  = api_prefs()
+  #   old_agent  = Enum.find(old_prefs, fn(x) -> x.name == target end) || %{}
+  #   clean_list = Enum.filter(old_prefs, fn(x) -> x.name != target end)
+  #   new_agent  = Merge(
+  #
+  #   :ok
+  # end
+
   # ----- callbacks
 
   @impl true

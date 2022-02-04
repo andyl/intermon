@@ -23,7 +23,10 @@ defmodule Superwatch.Cli.Actions.Agent do
 
   def handle(["agent", "select", target]) do
     IO.puts("Selecting #{target}")
-    IO.puts("UNDER CONSTRUCTION")
+    case Api.agent_select(target) do
+      {:error, msg} -> IO.puts("Error: #{msg}")
+      _ -> IO.puts("Selected: #{target}")
+    end
     do_prompt()
   end
 
