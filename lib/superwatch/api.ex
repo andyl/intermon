@@ -40,7 +40,7 @@ defmodule Superwatch.Api do
 
   # -- PREFS
 
-  def prefs do
+  def prefs_show do
     Prefs.api_prefs()
   end
 

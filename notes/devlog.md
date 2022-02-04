@@ -43,19 +43,45 @@ Approach:
 - [x] Make a util/editor module 
 - [x] Add an editor.launch function 
 
+## 2022 Feb 03 Thu
+
+Overview:
+- [x] read agents from config file (agent select)
+- [x] read agent from config file 
+- [x] read state 
+- [x] write state 
+
+Vim Work: 
+- updated snippets 
+- fixed Telescope MRU
+
+Concept Work: 
+- reorganized UI (agents and prefs) 
+- added an API layer 
+- services register with a pre-defined name - easier testing
+- changed prefs from a map to a list
+
 ## TODO
 
-Agent Command: 
-- [ ] read agents from config file (agent select)
-- [ ] read agent from config file 
+Commands:
+- [x] run 
+- [x] agent list 
+- [x] agent edit 
+- [ ] agent select 
+- [ ] prefs show 
+- [x] prefs edit 
+- [ ] prefs reset 
+- [ ] exit 
+- [ ] help
 
-Set & State Command: 
-- [ ] read state 
-- [ ] write state 
-
-Near Term: 
-- [ ] update state
-- [ ] finish runner
+Features: 
+- [ ] Reload after Agent Edit 
+- [ ] Reload after Prefs Edit
+- [ ] Update prefs after Agent Select 
+- [ ] Implement PrefsShow 
+- [ ] Implement PrefsReset
+- [ ] Validate Agent format (use ecto?)
+- [ ] Validate Prefs formatting (use ecto?) 
 
 Release:
 - [ ] Add release config 

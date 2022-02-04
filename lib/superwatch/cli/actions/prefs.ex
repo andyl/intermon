@@ -12,7 +12,7 @@ defmodule Superwatch.Cli.Actions.Prefs do
   end
 
   def handle(["prefs", "show"]) do
-    IO.puts("UNDER CONSTRUCTION")
+    Superwatch.Api.prefs_show() |> IO.inspect()
     do_prompt()
   end
 

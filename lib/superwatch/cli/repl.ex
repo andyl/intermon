@@ -11,9 +11,9 @@ defmodule Superwatch.Cli.Repl do
   defp loop do
     prompt_input = IO.gets("") |> String.trim()
     case prompt_input do
-      "prefs" -> do_prefs()
       "exit"  -> do_exit()
       "xx"    -> do_exit()
+      "run"   -> do_worker()
       ""      -> do_worker()
       value   -> value |> OptionParser.split() |> Actions.Core.handle()
     end
@@ -35,10 +35,5 @@ defmodule Superwatch.Cli.Repl do
   defp do_exit do
     IO.puts("EXITING")
     System.halt(0)
-  end
-
-  defp do_prefs do
-    Api.prefs()
-    do_prompt()
   end
 end

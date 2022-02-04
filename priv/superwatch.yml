@@ -42,4 +42,13 @@ rspec:
       shortdoc: Only run tests that match the filter
       default: false
       output: "--only <%= value %>" 
+date: 
+  desc: Echo current time to STDOUT
+  clearscreen: true
+  command: "date"
+uptime: 
+  desc: Show system uptime
+  clearscreen: true
+  command: "uptime"
+
 

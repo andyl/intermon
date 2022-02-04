@@ -3,8 +3,7 @@ defmodule Superwatch.Cli.Actions.Agent do
   alias Superwatch.Api
 
   @moduledoc """
-  Agent - list, edit, select
-  "agent save <name>
+  Cli.Actions.Agent - list, edit, select
   """
 
   @agentfile "~/.superwatch.yml" |> Path.expand()
