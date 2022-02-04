@@ -65,14 +65,14 @@ defmodule Superwatch.Svc.Store.Prefs do
   - prepend the new pref on the prefs list
   - save the changes into the prefs file
   """
-  # def api_select(target, agent) do
-  #   old_prefs  = api_prefs()
-  #   old_agent  = Enum.find(old_prefs, fn(x) -> x.name == target end) || %{}
-  #   clean_list = Enum.filter(old_prefs, fn(x) -> x.name != target end)
-  #   new_agent  = Merge(
-  #
-  #   :ok
-  # end
+  def api_select(_target, _agent) do
+    # old_prefs  = api_prefs()
+    # old_agent  = Enum.find(old_prefs, fn(x) -> x.name == target end) || %{}
+    # clean_list = Enum.filter(old_prefs, fn(x) -> x.name != target end)
+    # new_agent  = Merge(
+
+    :ok
+  end
 
   # ----- callbacks
 

@@ -1,7 +1,7 @@
 defmodule Superwatch.Svc.Store.PrefsTest do
   use ExUnit.Case
 
-  alias Superwatch.Svc.User.Prefs
+  alias Superwatch.Svc.Store.Prefs
 
   setup do
     Prefs.setup_test_prefs()

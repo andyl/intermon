@@ -87,6 +87,8 @@ Actions:
 
 ## TODO
 
+Svc: 
+- [ ] 
 Commands:
 - [x] run 
 - [x] agent list 

@@ -17,8 +17,8 @@ defmodule Superwatch.Svc.Worker do
 
   The command could also be a compiler, linter, etc.
 
-  This command is started over and over by a file-system Monitor.  When a file
-  changes, the Worker is auto-started by the Monitor.
+  This command is started over and over by a file-system Watcher.  When a file
+  changes, the Worker is auto-started by the Watcher.
 
   Struct:
   - task   - the PID of an active worker process

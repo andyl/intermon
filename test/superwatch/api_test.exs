@@ -2,14 +2,14 @@ defmodule Superwatch.ApiTest do
   use ExUnit.Case
 
   alias Superwatch.Api
-  alias Superwatch.Svc.{Monitor, Worker}
-  alias Superwatch.Svc.User.{Agents, Prefs}
+  alias Superwatch.Svc.{Watcher, Worker}
+  alias Superwatch.Svc.Store.{Agents, Prefs}
 
   setup do
     Prefs.setup_test_prefs()
     start_supervised!({Agents, []})
     start_supervised!({Prefs, []})
-    start_supervised!({Monitor, []})
+    start_supervised!({Watcher, []})
     start_supervised!({Worker, []})
     :ok
   end

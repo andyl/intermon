@@ -1,7 +1,7 @@
 defmodule Superwatch.Svc.Store.AgentsTest do
   use ExUnit.Case
 
-  alias Superwatch.Svc.User.Agents
+  alias Superwatch.Svc.Store.Agents
 
   describe "GenServer init" do
     test "with start_supervised" do

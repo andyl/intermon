@@ -6,8 +6,8 @@ defmodule Superwatch.Api do
   Called by the CLI.
   """
 
-  alias Superwatch.Svc.User.{Agents, Prefs}
-  alias Superwatch.Svc.{Monitor, Worker}
+  alias Superwatch.Svc.Store.{Agents, Prefs}
+  alias Superwatch.Svc.{Watcher, Worker}
   alias Superwatch.Sys
 
   # -- ORG
@@ -17,7 +17,7 @@ defmodule Superwatch.Api do
     prompt = Sys.prompt()
     Prefs.api_start()
     Worker.api_set(cmd: cmd, clearscreen: true, prompt: prompt)
-    Monitor.api_start()
+    Watcher.api_start()
     Worker.api_start()
   end
 
@@ -54,7 +54,7 @@ defmodule Superwatch.Api do
 
   def set(opts) when is_list(opts) do
     Prefs.api_set_prefs(opts)
-    Monitor.api_set(opts)
+    Watcher.api_set(opts)
     Worker.api_set(opts)
   end
 
