@@ -1,4 +1,4 @@
-defmodule Superwatch.Svc.User.AgentsTest do
+defmodule Superwatch.Svc.Store.AgentsTest do
   use ExUnit.Case
 
   alias Superwatch.Svc.User.Agents

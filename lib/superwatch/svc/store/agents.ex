@@ -1,4 +1,4 @@
-defmodule Superwatch.Svc.User.Agents do
+defmodule Superwatch.Svc.Store.Agents do
 
   @moduledoc """
   Maintains live config info - a list of agent configs.

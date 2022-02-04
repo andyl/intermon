@@ -1,4 +1,4 @@
-defmodule Superwatch.Svc.User.Prefs do
+defmodule Superwatch.Svc.Store.Prefs do
 
   @moduledoc """
   Maintains user preferences.

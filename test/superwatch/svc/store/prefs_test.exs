@@ -1,4 +1,4 @@
-defmodule Superwatch.Svc.User.PrefsTest do
+defmodule Superwatch.Svc.Store.PrefsTest do
   use ExUnit.Case
 
   alias Superwatch.Svc.User.Prefs
