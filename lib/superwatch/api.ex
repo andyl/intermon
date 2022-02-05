@@ -29,9 +29,8 @@ defmodule Superwatch.Api do
   # -- AGENT
 
   def agent_list do
-    # Agents.api_config()
-    # |> Enum.map(fn({name, val}) -> [name, val[:desc]] end)
-    :ok
+    Store.api_merged_data()
+    |> Enum.map(fn({name, val}) -> [name, val[:desc], val[:active?]] end)
   end
 
   def agent_select(_target) do

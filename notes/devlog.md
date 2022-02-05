@@ -86,15 +86,14 @@ Actions:
 -- update 
 
 - [x] Write svc/store 
+- [x] write tests for svc/store 
 
 ## TODO
 
-- [x] write tests for svc/store 
-
 Commands:
 - [ ] run 
-- [ ] agent list 
-- [ ] agent edit 
+- [x] agent list 
+- [x] agent edit 
 - [ ] agent select 
 - [ ] prefs show 
 - [ ] prefs edit 
