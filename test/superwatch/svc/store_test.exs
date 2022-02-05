@@ -48,23 +48,34 @@ defmodule Superwatch.Svc.StoreTest do
     test "filenames" do
       start_supervised({Store, []})
       assert Store.api_root_file()
-      # assert Store.api_overlay_file()
+      assert Store.api_overlay_file()
     end
 
-#     test "file presence" do
-#       assert Store.default_root_file() |> File.exists?()
-#       assert Store.default_overlay_file() |> File.exists?()
-#     end
-#
-#     test "read yaml" do
-#       assert Store.default_root_file() |> Store.read_yaml()
-#       assert Store.default_overlay_file() |> Store.read_yaml()
-#     end
-#
-#     test "read data" do
-#       assert Store.default_root_file() |> Store.read_data()
-#       assert Store.default_overlay_file() |> Store.read_data()
-#     end
+    test "file presence" do
+      start_supervised({Store, []})
+      assert Store.api_root_file() |> File.exists?()
+      assert Store.api_overlay_file() |> File.exists?()
+    end
+
+    test "agent data" do
+      start_supervised({Store, []})
+      assert Store.api_root_data()
+      assert Store.api_overlay_data()
+    end
+  end
+
+  describe "api_merged_data/0" do
+    test "merged data" do
+      start_supervised({Store, []})
+      assert Store.api_merged_data()
+    end
+  end
+
+  describe "api_active_agent/0" do
+    test "returns an atop" do
+      start_supervised({Store, []})
+      assert Store.api_active_agent()
+    end
   end
 
 #   describe "api_config/0" do

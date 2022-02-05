@@ -42,9 +42,8 @@ defmodule Superwatch.Data.Agent do
     }
   end
 
-  def to_map(agent) do
-    agent |> Map.from_struct()
-  end
+  def to_map(agent) when is_struct(agent), do: Map.from_struct(agent)
+  def to_map(agent) when is_map(agent), do: agent
 
   def strip(agent) do
     agent

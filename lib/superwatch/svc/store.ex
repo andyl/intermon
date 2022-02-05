@@ -63,6 +63,10 @@ defmodule Superwatch.Svc.Store do
 
   # ----- api
 
+  def api_start do
+    start_link()
+  end
+
   def api_root_file do
     GenServer.call(@proc_name, :api_root_file)
   end
@@ -116,6 +120,16 @@ defmodule Superwatch.Svc.Store do
   @impl true
   def handle_call(:api_overlay_file, _from, %{overlay_file: overlay_file} = state) do
     {:reply, overlay_file, state}
+  end
+
+  @impl true
+  def handle_call(:api_root_data, _from, %{root_data: root_data} = state) do
+    {:reply, root_data, state}
+  end
+
+  @impl true
+  def handle_call(:api_overlay_data, _from, %{overlay_data: overlay_data} = state) do
+    {:reply, overlay_data, state}
   end
 
   # @doc false

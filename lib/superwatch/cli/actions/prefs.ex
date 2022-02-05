@@ -4,17 +4,17 @@ defmodule Superwatch.Cli.Actions.Prefs do
   Cli.Actions.Prefs - show, edit, reset
   """
 
-  @prefsfile "./.superwatch_prefs.yml" |> Path.expand()
+  # @prefsfile "./.superwatch_prefs.yml" |> Path.expand()
 
-  def handle(["prefs", "edit"]) do
-    Util.Editor.launch(@prefsfile)
-    do_prompt()
-  end
-
-  def handle(["prefs", "show"]) do
-    Superwatch.Api.prefs_show() |> IO.inspect()
-    do_prompt()
-  end
+#   def handle(["prefs", "edit"]) do
+#     Util.Editor.launch(@prefsfile)
+#     do_prompt()
+#   end
+#
+#   def handle(["prefs", "show"]) do
+#     Superwatch.Api.prefs_show() |> IO.inspect()
+#     do_prompt()
+#   end
 
   def handle(["prefs", "reset"]) do
     IO.puts("UNDER CONSTRUCTION")
