@@ -16,7 +16,7 @@ defmodule Superwatch.MixProject do
   def application do
     [
       extra_applications: [:logger, :muontrap],
-      mod: {Superwatch.Svc.Application, []},
+      mod: {Superwatch.Svc.App, []},
     ]
   end
 

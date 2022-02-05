@@ -1,4 +1,4 @@
-defmodule Superwatch.Svc.Supervisor do
+defmodule Superwatch.Svc.Appsup do
   use Supervisor
 
   alias Superwatch.Svc.Store

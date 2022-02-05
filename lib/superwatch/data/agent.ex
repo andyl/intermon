@@ -17,18 +17,51 @@ defmodule Superwatch.Data.Agent do
     :pref_args      # preference arguments
   ]
 
+  @doc """
+  Generates an agent struct from a map.
+
+  Missing fields are given a nil value.
+  """
   def gen(data) do
+
+    datakey = data |> Util.MapUtil.atomify_keys()
+
     %Agent{
-      desc:          Map.get(data, "desc", ""),
-      include:       Map.get(data, "include", ""),
-      watch_dirs:    Map.get(data, "dirs", ""),
-      watch_ftypes:  Map.get(data, "ftypes", ""),
-      watch_filters: Map.get(data, "filters", ""),
-      clearscreen?:  Map.get(data, "clearscreen", ""),
-      worker_cmd:    Map.get(data, "command", ""),
-      worker_flags:  Map.get(data, "worker_flags", []),
-      worker_args:   Map.get(data, "worker_args", %{})
+      desc:          get(datakey, :desc          ) ,
+      include:       get(datakey, :include       ) ,
+      watch_dirs:    get(datakey, :watch_dirs    ) ,
+      watch_ftypes:  get(datakey, :watch_ftypes  ) ,
+      watch_filters: get(datakey, :watch_filters ) ,
+      worker_cmd:    get(datakey, :worker_cmd    ) ,
+      worker_flags:  get(datakey, :worker_flags  ) ,
+      worker_args:   get(datakey, :worker_args   ) ,
+      clearscreen?:  get(datakey, :clearscreen?  ) ,
+      active?:       get(datakey, :active?       ) ,
+      pref_flags:    get(datakey, :pref_flags    ) ,
+      pref_args:     get(datakey, :pref_args     ) ,
     }
+  end
+
+  def to_map(agent) do
+    agent |> Map.from_struct()
+  end
+
+  def strip(agent) do
+    agent
+    |> to_map()
+    |> Enum.reduce(%{}, fn({key, val}, acc) ->
+          if val != nil, do: Map.merge(acc, %{key => val}), else: acc
+        end)
+  end
+
+  def merge(agent1, agent2) do
+    agent1 |> Map.merge(strip(agent2))
+  end
+
+  # -----
+
+  defp get(data, field) do
+    Map.get(data, field, nil)
   end
 
 end
