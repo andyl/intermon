@@ -1,7 +1,5 @@
 defmodule Superwatch.Cli.Repl do
 
-  alias Superwatch.Api
-
   alias Superwatch.Cli.Actions
 
   def start() do
@@ -29,7 +27,7 @@ defmodule Superwatch.Cli.Repl do
   # ----- private
 
   defp do_worker do
-    Api.run()
+    Superwatch.Api.run()
   end
 
   defp do_exit do

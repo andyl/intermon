@@ -90,32 +90,29 @@ Actions:
 - [x] reimplement CLI
 - [x] Reload after Agent Edit 
 - [x] Reload after Prefs Edit
+- [x] Command Generate (build, test) 
+- [x] Fix performance issues
 
 ## TODO
 
+GetCh: 
+- [ ] study owl
+- [ ] study elixir iex 
+
 Next Steps: 
-- [ ] Command Generate (build, test) 
-- [ ] Fix performance issues
+- [ ] Agent and command on prompt
+- [ ] Command line EEX
+- [ ] Option Parse 
+- [ ] Set command / OptionParse / Parse Generator
 - [ ] Implement PrefsReset
 - [ ] Validate Agent format (use ecto?)
 - [ ] Validate Prefs formatting (use ecto?) 
-
-Commands:
-- [x] run 
-- [x] agent list 
-- [x] agent edit 
-- [-] agent select 
-- [x] prefs show 
-- [x] prefs edit 
-- [-] prefs reset 
-- [x] exit 
-- [x] help
+- [ ] Add tab completion & history
+- [ ] Agent Library in Repo 
+- [ ] Download agents using client
 
 Release:
 - [ ] Add release config 
 - [ ] Add Burrito config 
 - [ ] Create release page with burrito executables
-
-Long Term:
-- [ ] Add tab completion
 

@@ -62,7 +62,10 @@ defmodule Superwatch.Api do
   # -- RESET
 
   def reset do
-    # Prefs.api_reset()
+    Store.api_reload()
+    cmd = Sys.command()
+    prompt = Sys.prompt()
+    Worker.api_set(cmd: cmd, prompt: prompt)
     :ok
   end
 

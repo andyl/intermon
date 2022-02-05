@@ -8,7 +8,7 @@ defmodule Superwatch.Cli.Base do
     case arg do
       "start" -> start()
       "help"  -> help()
-      arg -> IO.puts("Unrecognized: #{arg} (try 'superwatch help')")
+      arg     -> IO.puts("Unrecognized: #{arg} (try 'superwatch help')")
     end
   end
 

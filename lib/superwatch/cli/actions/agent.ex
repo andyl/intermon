@@ -11,7 +11,7 @@ defmodule Superwatch.Cli.Actions.Agent do
     Store.api_root_file()
     |> Path.expand()
     |> Util.Editor.launch()
-    Store.api_reload()
+    Api.reset()
     do_prompt()
   end
 

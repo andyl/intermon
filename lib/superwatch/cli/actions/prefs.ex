@@ -10,7 +10,7 @@ defmodule Superwatch.Cli.Actions.Prefs do
     Store.api_overlay_file()
     |> Path.expand()
     |> Util.Editor.launch()
-    Store.api_reload()
+    Superwatch.Api.reset()
     do_prompt()
   end
 

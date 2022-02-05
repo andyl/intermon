@@ -7,8 +7,8 @@ defmodule Superwatch.Cli.Actions.Help do
 
       Superwatch Options
         run           - rerun worker
-        agent         - list / edit / select
-        prefs         - show / edit / reset
+        agent         - list / edit
+        prefs         - show / edit
         exit          - quit Superwatch
         help <option> - help on an Option
 
@@ -35,9 +35,8 @@ defmodule Superwatch.Cli.Actions.Help do
 
       prefs - manage preferences
 
-        prefs show  - show preferences
-        prefs edit  - edit preferences
-        prefs reset - reset preferences
+        prefs show - show preferences
+        prefs edit - edit preferences
       """
     )
     do_prompt()
@@ -49,9 +48,8 @@ defmodule Superwatch.Cli.Actions.Help do
 
       agent - manage agents
 
-        agent list           - list currently defined agents
-        agent edit           - edit agents config file (~/.superwatch.yml)
-        agent select <agent> - use an agent
+        agent list - list currently defined agents
+        agent edit - edit agents config file (~/.superwatch.yml)
       """
     )
     do_prompt()
