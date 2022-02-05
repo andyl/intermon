@@ -1,6 +1,6 @@
 ---
 ex_unit: 
-  active?: true
   clearscreen: true
 rspec: 
+  active?: true
   clearscreen: true

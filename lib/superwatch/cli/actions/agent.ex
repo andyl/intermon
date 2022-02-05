@@ -11,6 +11,7 @@ defmodule Superwatch.Cli.Actions.Agent do
     Store.api_root_file()
     |> Path.expand()
     |> Util.Editor.launch()
+    Store.api_reload()
     do_prompt()
   end
 
@@ -22,12 +23,8 @@ defmodule Superwatch.Cli.Actions.Agent do
     do_prompt()
   end
 
-  def handle(["agent", "select", target]) do
-    IO.puts("Selecting #{target}")
-    case Api.agent_select(target) do
-      {:error, msg} -> IO.puts("Error: #{msg}")
-      _ -> IO.puts("Selected: #{target}")
-    end
+  def handle(["agent", "select", _target]) do
+    IO.puts("UNDER CONSTRUCTION")
     do_prompt()
   end
 

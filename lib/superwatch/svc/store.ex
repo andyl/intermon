@@ -42,16 +42,7 @@ defmodule Superwatch.Svc.Store do
   @doc false
   @impl true
   def init(opts \\ []) when is_list(opts) do
-    root_file = opts[:root_file] || default_root_file()
-    overlay_file = opts[:overlay_file] || default_overlay_file()
-    root_data = read_data(root_file)
-    overlay_data = read_data(overlay_file)
-    state = %{
-      root_file: root_file,
-      overlay_file: overlay_file,
-      root_data: root_data,
-      overlay_data: overlay_data
-    }
+    state = opts |> init_state()
     {:ok, state}
   end
 
@@ -106,9 +97,9 @@ defmodule Superwatch.Svc.Store do
     :ok
   end
 
-  # def api_reload(config \\ []) do
-  #   GenServer.call(@proc_name, {:reload, config})
-  # end
+  def api_reload(opts \\ []) do
+    GenServer.call(@proc_name, {:reload, opts})
+  end
 
   # ----- callbacks
 
@@ -139,12 +130,11 @@ defmodule Superwatch.Svc.Store do
   #   {:reply, new_config, %{config: new_config}}
   # end
 
-  # @doc false
-  # @impl true
-  # def handle_call({:reload, new_cfg}, _from, _state) do
-  #   new_config = config_map() |> config_update(new_cfg)
-  #   {:reply, new_config, %{config: new_config}}
-  # end
+  @impl true
+  def handle_call({:reload, opts}, _from, _state) do
+    new_state = opts |> init_state()
+    {:reply, :ok, new_state}
+  end
 
   # ----- helpers
 
@@ -207,6 +197,21 @@ defmodule Superwatch.Svc.Store do
         Map.merge(acc, tgt)
     end)
     Map.merge(base1, base2)
+  end
+
+  # init_state
+
+  def init_state(opts) do
+    root_file    = opts[:root_file] || default_root_file()
+    overlay_file = opts[:overlay_file] || default_overlay_file()
+    root_data    = read_data(root_file)
+    overlay_data = read_data(overlay_file)
+    %{
+      root_file:    root_file,
+      overlay_file: overlay_file,
+      root_data:    root_data,
+      overlay_data: overlay_data
+    }
   end
 
   # test helper

@@ -87,28 +87,29 @@ Actions:
 
 - [x] Write svc/store 
 - [x] write tests for svc/store 
+- [x] reimplement CLI
+- [x] Reload after Agent Edit 
+- [x] Reload after Prefs Edit
 
 ## TODO
+
+Next Steps: 
+- [ ] Command Generate (build, test) 
+- [ ] Fix performance issues
+- [ ] Implement PrefsReset
+- [ ] Validate Agent format (use ecto?)
+- [ ] Validate Prefs formatting (use ecto?) 
 
 Commands:
 - [x] run 
 - [x] agent list 
 - [x] agent edit 
-- [ ] agent select 
+- [-] agent select 
 - [x] prefs show 
 - [x] prefs edit 
-- [ ] prefs reset 
-- [ ] exit 
-- [ ] help
-
-Features: 
-- [ ] Reload after Agent Edit 
-- [ ] Reload after Prefs Edit
-- [ ] Update prefs after Agent Select 
-- [ ] Implement PrefsShow 
-- [ ] Implement PrefsReset
-- [ ] Validate Agent format (use ecto?)
-- [ ] Validate Prefs formatting (use ecto?) 
+- [-] prefs reset 
+- [x] exit 
+- [x] help
 
 Release:
 - [ ] Add release config 
