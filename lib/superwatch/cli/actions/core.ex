@@ -26,5 +26,4 @@ defmodule Superwatch.Cli.Actions.Core do
     do_prompt()
   end
 
-
 end

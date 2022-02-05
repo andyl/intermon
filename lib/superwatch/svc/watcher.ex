@@ -1,4 +1,4 @@
-defmodule Superwatch.Svc.Monitor do
+defmodule Superwatch.Svc.Watcher do
 
   use GenServer
 
@@ -8,11 +8,11 @@ defmodule Superwatch.Svc.Monitor do
 
   @proc_name :monitor_proc
 
-  alias Superwatch.Svc.Monitor
+  alias Superwatch.Svc.Watcher
   alias Superwatch.Svc.Worker
 
   @moduledoc """
-  Monitor - file watcher and command runner
+  Watcher - file watcher and command runner
 
   Struct:
   - pid         - the watcher pid
@@ -103,13 +103,13 @@ defmodule Superwatch.Svc.Monitor do
     if state.pid, do: stop_mon(state.pid)
     new_state = state |> Map.merge(optsmap)
     new_pid = new_state |> start_mon()
-    {:reply, new_pid, %Monitor{new_state | pid: new_pid}}
+    {:reply, new_pid, %Watcher{new_state | pid: new_pid}}
   end
 
   @impl true
   def handle_call(:stop, _from, state) do
     if state.pid, do: stop_mon(state.pid)
-    {:reply, :ok, %Monitor{state | pid: nil}}
+    {:reply, :ok, %Watcher{state | pid: nil}}
   end
 
   @impl true
@@ -160,7 +160,7 @@ defmodule Superwatch.Svc.Monitor do
   end
 
   defp set_state(opts) when is_map(opts) do
-    %Monitor{
+    %Watcher{
       pid:      Map.get(opts, :pid, nil),
       dirs:     Map.get(opts, :dirs, ~w(lib test apps)),
       ftypes:   Map.get(opts, :ftypes, ~w(ex eex heex exs)),
@@ -171,7 +171,7 @@ defmodule Superwatch.Svc.Monitor do
 
 
   defp set_state(opts) when is_list(opts) do
-    %Monitor{
+    %Watcher{
       pid:      Keyword.get(opts, :pid, nil),
       dirs:     Keyword.get(opts, :dirs, ~w(lib test)),
       ftypes:   Keyword.get(opts, :ftypes, ~w(ex eex heex exs)),

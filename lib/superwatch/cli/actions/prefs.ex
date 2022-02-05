@@ -4,10 +4,12 @@ defmodule Superwatch.Cli.Actions.Prefs do
   Cli.Actions.Prefs - show, edit, reset
   """
 
-  @prefsfile "./.superwatch_prefs.yml" |> Path.expand()
+  alias Superwatch.Svc.Store
 
   def handle(["prefs", "edit"]) do
-    Util.Editor.launch(@prefsfile)
+    Store.api_overlay_file()
+    |> Path.expand()
+    |> Util.Editor.launch()
     do_prompt()
   end
 

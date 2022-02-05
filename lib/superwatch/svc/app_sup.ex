@@ -1,8 +1,8 @@
-defmodule Superwatch.Svc.Supervisor do
+defmodule Superwatch.Svc.AppSup do
   use Supervisor
 
-  alias Superwatch.Svc.User
-  alias Superwatch.Svc.{Worker, Monitor}
+  alias Superwatch.Svc.Store
+  alias Superwatch.Svc.{Worker, Watcher}
 
   def start_link(_args) do
     Supervisor.start_link(__MODULE__, [], name: __MODULE__)
@@ -12,10 +12,9 @@ defmodule Superwatch.Svc.Supervisor do
   def init(args \\ []) do
 
     base_children = [
-      {User.Prefs, args},
-      {User.Agents, args},
+      {Store, args},
       {Worker, [prompt: "Superwatch > "]},
-      {Monitor, args}
+      {Watcher, args}
     ]
 
     children = case Application.get_env(:superwatch, :env) do

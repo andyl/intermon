@@ -1,20 +1,21 @@
 defmodule Superwatch.Cli.Actions.Agent do
 
   alias Superwatch.Api
+  alias Superwatch.Svc.Store
 
   @moduledoc """
   Cli.Actions.Agent - list, edit, select
   """
 
-  @agentfile "~/.superwatch.yml" |> Path.expand()
-
   def handle(["agent", "edit"]) do
-    Util.Editor.launch(@agentfile)
+    Store.api_root_file()
+    |> Path.expand()
+    |> Util.Editor.launch()
     do_prompt()
   end
 
   def handle(["agent", "list"]) do
-    header = ~w(Agent Description)
+    header = ~w(Agent Description Active?)
     rows = Api.agent_list()
     TableRex.quick_render!(rows, header) <> "\n"
     |> IO.puts()
