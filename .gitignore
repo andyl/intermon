@@ -7,4 +7,5 @@ erl_crash.dump
 *.ez
 intermon-*.tar
 /tmp/
-.elixir_ls/
+/.elixir_ls/
+/archive/
