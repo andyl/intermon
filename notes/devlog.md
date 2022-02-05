@@ -91,12 +91,12 @@ Actions:
 ## TODO
 
 Commands:
-- [ ] run 
+- [x] run 
 - [x] agent list 
 - [x] agent edit 
 - [ ] agent select 
-- [ ] prefs show 
-- [ ] prefs edit 
+- [x] prefs show 
+- [x] prefs edit 
 - [ ] prefs reset 
 - [ ] exit 
 - [ ] help

@@ -47,8 +47,7 @@ defmodule Superwatch.Api do
   # -- PREFS
 
   def prefs_show do
-    # Prefs.api_prefs()
-    :ok
+    Store.api_overlay_data()
   end
 
   # -- SET
