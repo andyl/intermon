@@ -1,4 +1,4 @@
-defmodule Superwatch.Svc.Appsup do
+defmodule Superwatch.Svc.AppSup do
   use Supervisor
 
   alias Superwatch.Svc.Store
@@ -12,8 +12,7 @@ defmodule Superwatch.Svc.Appsup do
   def init(args \\ []) do
 
     base_children = [
-      {Store.Prefs, args},
-      {Store.Agents, args},
+      {Store, args},
       {Worker, [prompt: "Superwatch > "]},
       {Watcher, args}
     ]

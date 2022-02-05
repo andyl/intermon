@@ -1,15 +1,6 @@
 ---
-- agent: ex_unit
-  dirs: [] 
-  ftypes: []
-  filter: [] 
-  clearscreen: false 
-  worker_flags: [] 
-  worker_args: []
-- agent: rspec
-  dirs: [] 
-  ftypes: []
-  filter: [] 
-  clearscreen: false 
-  worker_flags: [] 
-  worker_args: []
+ex_unit: 
+  active?: true
+  clearscreen: true
+rspec: 
+  clearscreen: true

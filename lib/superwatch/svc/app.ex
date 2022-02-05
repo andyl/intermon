@@ -6,7 +6,7 @@ defmodule Superwatch.Svc.App do
   @impl true
   def start(_type, _args) do
     children = [
-      {Superwatch.Svc.Appsup, %{}}
+      {Superwatch.Svc.AppSup, %{}}
     ]
 
     opts = [strategy: :one_for_one, name: __MODULE__]

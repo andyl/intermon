@@ -108,10 +108,14 @@ defmodule Superwatch.Svc.Store do
 
   # ----- callbacks
 
-  @doc false
   @impl true
-  def handle_call(:config, _from, %{config: config} = state) do
-    {:reply, config, state}
+  def handle_call(:api_root_file, _from, %{root_file: root_file} = state) do
+    {:reply, root_file, state}
+  end
+
+  @impl true
+  def handle_call(:api_overlay_file, _from, %{overlay_file: overlay_file} = state) do
+    {:reply, overlay_file, state}
   end
 
   # @doc false
@@ -141,8 +145,8 @@ defmodule Superwatch.Svc.Store do
 
   def default_overlay_file do
     case Application.get_env(:superwatch, :env) do
-      :test -> Application.app_dir(:superwatch) <> "/priv/superwatch_overlay.yml"
-      _ -> "~/.superwatch.yml" |> Path.expand()
+      :test -> test_overlay_file()
+      _ -> "./.superwatch.yml" |> Path.expand()
     end
   end
 
@@ -190,5 +194,18 @@ defmodule Superwatch.Svc.Store do
     end)
     Map.merge(base1, base2)
   end
+
+  # test helper
+
+  def test_overlay_file, do: "/tmp/superwatch_overlay_test.yml"
+
+  # tmp file copied from priv dir for tests
+  # see 'test / setup' block for details
+  def setup_test_overlay do
+    srcfile = Application.app_dir(:superwatch) <> "/priv/superwatch_overlay.yml"
+    tgtfile = test_overlay_file()
+    File.cp(srcfile, tgtfile)
+  end
+
 
 end

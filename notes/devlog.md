@@ -85,17 +85,19 @@ Actions:
 -- select 
 -- update 
 
+- [x] Write svc/store 
+
 ## TODO
 
-Svc: 
-- [ ] 
+- [x] write tests for svc/store 
+
 Commands:
-- [x] run 
-- [x] agent list 
-- [-] agent edit 
+- [ ] run 
+- [ ] agent list 
+- [ ] agent edit 
 - [ ] agent select 
-- [x] prefs show 
-- [-] prefs edit 
+- [ ] prefs show 
+- [ ] prefs edit 
 - [ ] prefs reset 
 - [ ] exit 
 - [ ] help
