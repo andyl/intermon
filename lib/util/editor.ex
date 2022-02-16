@@ -4,14 +4,14 @@ defmodule Util.Editor do
    Launch editor with file, blocks until editor closes.
    """
    def launch(file) when is_binary(file) do
-     exe = {:spawn_executable, editor_executable()}
-     opt = [:exit_status, :binary, :nouse_stdio, args: [file]]
+     exe = {:spawn_executable, terminal_executable()}
+     opt = [:exit_status, :binary, :nouse_stdio, args: args(file)]
      # launch editor
      Port.open(exe, opt)
-     # block until editor closes
      receive do
-       _message -> :ok
+       message -> IO.inspect(message, label: "EDITOR LAUNCH")
      end
+     :ok
    end
 
    @doc """
@@ -22,6 +22,15 @@ defmodule Util.Editor do
    end
 
    # -----
+
+   defp args(file) do
+     ["--execute", editor_executable(), file]
+   end
+
+   defp terminal_executable do
+     System.get_env("TERMINAL")
+     |> System.find_executable()
+   end
 
    defp editor_executable do
      System.get_env("EDITOR")

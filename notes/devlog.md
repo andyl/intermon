@@ -93,23 +93,37 @@ Actions:
 - [x] Command Generate (build, test) 
 - [x] Fix performance issues
 
+## 2022 Feb 15 Tue
+
+- [x] Agent and command on prompt
+- [x] Command generate EEX
+- [x] Option Parse 
+- [x] Set command / OptionParse / Parse Generator
+- [x] Diagnose editor performance
+
+Learning:
+- editor cannot work 
+- must launch in separate terminal
+
+- [x] Do editor launch in terminal 
+- [x] Add a reload command 
+
 ## TODO
+
+Next Steps: 
+- [ ] Monitor agent and overlay files and auto-reload 
+- [ ] Validate Agent format (use ecto?)
+- [ ] Validate Prefs formatting (use ecto?) 
+
+Long Term: 
+- [ ] Agent Library in Repo 
+- [ ] Download agents using client
 
 GetCh: 
 - [ ] study owl
 - [ ] study elixir iex 
-
-Next Steps: 
-- [ ] Agent and command on prompt
-- [ ] Command line EEX
-- [ ] Option Parse 
-- [ ] Set command / OptionParse / Parse Generator
-- [ ] Implement PrefsReset
-- [ ] Validate Agent format (use ecto?)
-- [ ] Validate Prefs formatting (use ecto?) 
+- [ ] test rlfe and rlwrap 
 - [ ] Add tab completion & history
-- [ ] Agent Library in Repo 
-- [ ] Download agents using client
 
 Release:
 - [ ] Add release config 

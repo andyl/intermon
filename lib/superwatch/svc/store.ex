@@ -39,14 +39,12 @@ defmodule Superwatch.Svc.Store do
     GenServer.start_link(__MODULE__, opts, name: @proc_name)
   end
 
-  @doc false
   @impl true
   def init(opts \\ []) when is_list(opts) do
     state = opts |> init_state()
     {:ok, state}
   end
 
-  @doc false
   @impl true
   def terminate(_reason, _state) do
     :normal
@@ -57,6 +55,15 @@ defmodule Superwatch.Svc.Store do
   def api_start do
     start_link()
   end
+
+  def api_stop do
+    GenServer.call(@proc_name, :stop)
+  end
+
+  def api_kill do
+    GenServer.call(@proc_name, :kill)
+  end
+
 
   def api_root_file do
     GenServer.call(@proc_name, :api_root_file)
@@ -134,6 +141,16 @@ defmodule Superwatch.Svc.Store do
   def handle_call({:reload, opts}, _from, _state) do
     new_state = opts |> init_state()
     {:reply, :ok, new_state}
+  end
+
+  @impl true
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, state, state}
+  end
+
+  @impl true
+  def handle_call(:kill, _from, state) do
+    {:stop, :normal, state, state}
   end
 
   # ----- helpers

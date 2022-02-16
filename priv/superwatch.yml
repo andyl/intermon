@@ -5,7 +5,7 @@ ex_unit:
   ftypes: "ex,eex,heex"
   filter: 
   clearscreen: true 
-  command: "mix test <%= flags %> <%= args %>"
+  command: "mix test --color <%= flags %> <%= args %>"
   flags:
     focus: 
       shortname: f
@@ -43,12 +43,11 @@ rspec:
       default: false
       output: "--only <%= value %>" 
 date: 
-  desc: Echo current time to STDOUT
+  desc: Echo current time TO STDOUT
   clearscreen: true
   command: "date"
 uptime: 
   desc: Show system uptime
   clearscreen: true
   command: "uptime"
-
 

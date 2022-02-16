@@ -1,12 +1,12 @@
 ---
 ex_unit: 
   clearscreen: true
-  command: "mix test --stale --color"
+  active?: true
+  prefs: "-s" 
 rspec: 
   command: "echo RSPEC"
-  active?: true
   clearscreen: true
 tango: 
   desc: "THE DATE COMMAND"
   command: "date"
-  clearscreen: true
+

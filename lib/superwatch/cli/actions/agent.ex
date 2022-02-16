@@ -1,6 +1,6 @@
 defmodule Superwatch.Cli.Actions.Agent do
 
-  alias Superwatch.Api
+  alias Superwatch.Cli.Repl
   alias Superwatch.Svc.Store
 
   @moduledoc """
@@ -11,13 +11,12 @@ defmodule Superwatch.Cli.Actions.Agent do
     Store.api_root_file()
     |> Path.expand()
     |> Util.Editor.launch()
-    Api.reset()
-    do_prompt()
+    Repl.do_prompt()
   end
 
   def handle(["agent", "list"]) do
     header = ~w(Agent Description Active?)
-    rows = Api.agent_list()
+    rows = Superwatch.Api.agent_list()
     TableRex.quick_render!(rows, header) <> "\n"
     |> IO.puts()
     do_prompt()

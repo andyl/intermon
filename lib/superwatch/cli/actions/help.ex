@@ -9,6 +9,8 @@ defmodule Superwatch.Cli.Actions.Help do
         run           - rerun worker
         agent         - list / edit
         prefs         - show / edit
+        clear         - clear screen
+        reload        - reload configs
         exit          - quit Superwatch
         help <option> - help on an Option
 
