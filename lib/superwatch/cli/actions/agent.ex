@@ -17,7 +17,7 @@ defmodule Superwatch.Cli.Actions.Agent do
   def handle(["agent", "list"]) do
     header = ~w(Agent Description Active?)
     rows = Superwatch.Api.agent_list()
-    TableRex.quick_render!(rows, header) <> "\n"
+    TableRex.quick_render!(rows, header)
     |> IO.puts()
     do_prompt()
   end
