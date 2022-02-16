@@ -50,7 +50,8 @@ defmodule Superwatch.Cli.Actions.Help do
 
       agent - manage agents
 
-        agent list - list currently defined agents
+        agent show - show the active agent
+        agent list - list all defined agents
         agent edit - edit agents config file (~/.superwatch.yml)
       """
     )

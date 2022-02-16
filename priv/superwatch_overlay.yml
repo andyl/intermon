@@ -2,7 +2,7 @@
 ex_unit: 
   clearscreen: true
   active?: true
-  prefs: "--stale" 
+  prefs: "" 
 rspec: 
   command: "echo RSPEC"
   clearscreen: true

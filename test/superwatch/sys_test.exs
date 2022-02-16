@@ -20,6 +20,13 @@ defmodule Superwatch.SysTest do
     test "runs" do
       assert Sys.command()
     end
+
+    test "runs without overlay" do
+      File.rm(Store.test_overlay_file())
+      Store.api_kill()
+      Store.api_start()
+      assert Sys.command()
+    end
   end
 
   describe "#command_with_args/0" do

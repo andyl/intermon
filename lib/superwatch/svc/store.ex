@@ -64,7 +64,6 @@ defmodule Superwatch.Svc.Store do
     GenServer.call(@proc_name, :kill)
   end
 
-
   def api_root_file do
     GenServer.call(@proc_name, :api_root_file)
   end
@@ -88,11 +87,11 @@ defmodule Superwatch.Svc.Store do
   end
 
   def api_active_agent do
-    overlay = GenServer.call(@proc_name, :api_overlay_data)
-    result  = Enum.find(overlay, nil, fn({_, val}) -> val[:active?] end)
+    merged  = api_merged_data()
+    result  = Enum.find(merged, nil, fn({_, val}) -> val[:active?] end)
     case result do
       {key, _val} -> key
-      nil -> first_key(overlay)
+      nil -> first_key(merged)
     end
   end
 

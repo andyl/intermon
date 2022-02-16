@@ -13,7 +13,6 @@ defmodule Superwatch.Sys do
     active_agent = Superwatch.Svc.Store.api_active_agent()
     Superwatch.Svc.Store.api_merged_data()[active_agent]
     |> command_with_args()
-
   end
 
   @doc false

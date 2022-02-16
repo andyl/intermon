@@ -10,6 +10,8 @@ ex_unit:
     focus: 
       shortname: f
       desc: Run only focus tests
+      doc: |
+        Only run tests prepended with `@tag :focus`
       default: false
       output: "--only focus:true" 
     stale: 
@@ -20,7 +22,7 @@ ex_unit:
   args: 
     only: 
       shortname: o
-      shortdoc: Only run tests that match the filter
+      desc: Only run tests that match the filter
       default: false
       output: "--only <%= value %>" 
 rspec: 

@@ -108,6 +108,12 @@ Learning:
 - [x] Do editor launch in terminal 
 - [x] Add a reload command 
 
+## 2022 Feb 16 Wed
+
+- [x] Added "doc" attribute for agent flags and args 
+- [x] Added `agent show` comment to show agent options and doc 
+- [x] Fix bug when there is no overlay file.
+
 ## TODO
 
 Next Steps: 

@@ -41,6 +41,12 @@ defmodule Superwatch.Api do
 
   # -- AGENT
 
+  def agent_show do
+    active_agent = Superwatch.Svc.Store.api_active_agent()
+    active_data = Superwatch.Svc.Store.api_merged_data()[active_agent]
+    {active_agent, active_data}
+  end
+
   def agent_list do
     Store.api_merged_data()
     |> Enum.map(fn({name, val}) -> [name, val[:desc], val[:active?]] end)

@@ -22,6 +22,13 @@ defmodule Superwatch.Cli.Actions.Agent do
     do_prompt()
   end
 
+  def handle(["agent", "show"]) do
+    {agent, data} = Superwatch.Api.agent_show()
+    IO.inspect(agent, label: "ACTIVE AGENT")
+    IO.inspect(data, label: "DATA")
+    do_prompt()
+  end
+
   def handle(["agent", "select", _target]) do
     IO.puts("UNDER CONSTRUCTION")
     do_prompt()
