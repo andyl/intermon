@@ -23,7 +23,7 @@ defmodule Superwatch.MixProject do
   defp deps do
     [
       {:muontrap, "~> 1.0"},
-      {:yaml_elixir, "~> 2.8"},
+      {:yaml_elixir, "~> 2.9"},
       {:file_system, "~> 0.2"},
       {:ymlr, "~> 2.0"},
       {:table_rex, "~> 3.1"}
