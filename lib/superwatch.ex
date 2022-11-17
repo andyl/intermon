@@ -1,17 +1,6 @@
 defmodule Superwatch do
-  @moduledoc """
-  Documentation for `Superwatch`.
-  """
+  @moduledoc false
 
-  @doc """
-  Hello world.
-
-  ## Examples
-
-      iex> Superwatch.hello()
-      :world
-
-  """
   def hello do
     :world
   end

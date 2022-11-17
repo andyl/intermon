@@ -5,11 +5,13 @@ ex_unit:
   ftypes: "ex,eex,heex"
   filter: 
   clearscreen: true 
-  command: "mix test <%= flags %> <%= args %>"
+  command: "mix test --color <%= flags %> <%= args %>"
   flags:
     focus: 
       shortname: f
       desc: Run only focus tests
+      doc: |
+        Only run tests prepended with `@tag :focus`
       default: false
       output: "--only focus:true" 
     stale: 
@@ -20,7 +22,7 @@ ex_unit:
   args: 
     only: 
       shortname: o
-      shortdoc: Only run tests that match the filter
+      desc: Only run tests that match the filter
       default: false
       output: "--only <%= value %>" 
 rspec: 
@@ -43,12 +45,11 @@ rspec:
       default: false
       output: "--only <%= value %>" 
 date: 
-  desc: Echo current time to STDOUT
+  desc: Echo current time TO STDOUT
   clearscreen: true
   command: "date"
 uptime: 
   desc: Show system uptime
   clearscreen: true
   command: "uptime"
-
 

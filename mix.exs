@@ -15,7 +15,7 @@ defmodule Superwatch.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :muontrap],
+      extra_applications: [:logger, :muontrap, :eex],
       mod: {Superwatch.Svc.App, []},
     ]
   end

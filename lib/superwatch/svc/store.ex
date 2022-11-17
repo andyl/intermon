@@ -39,23 +39,12 @@ defmodule Superwatch.Svc.Store do
     GenServer.start_link(__MODULE__, opts, name: @proc_name)
   end
 
-  @doc false
   @impl true
   def init(opts \\ []) when is_list(opts) do
-    root_file = opts[:root_file] || default_root_file()
-    overlay_file = opts[:overlay_file] || default_overlay_file()
-    root_data = read_data(root_file)
-    overlay_data = read_data(overlay_file)
-    state = %{
-      root_file: root_file,
-      overlay_file: overlay_file,
-      root_data: root_data,
-      overlay_data: overlay_data
-    }
+    state = opts |> init_state()
     {:ok, state}
   end
 
-  @doc false
   @impl true
   def terminate(_reason, _state) do
     :normal
@@ -65,6 +54,14 @@ defmodule Superwatch.Svc.Store do
 
   def api_start do
     start_link()
+  end
+
+  def api_stop do
+    GenServer.call(@proc_name, :stop)
+  end
+
+  def api_kill do
+    GenServer.call(@proc_name, :kill)
   end
 
   def api_root_file do
@@ -90,11 +87,11 @@ defmodule Superwatch.Svc.Store do
   end
 
   def api_active_agent do
-    overlay = GenServer.call(@proc_name, :api_overlay_data)
-    result  = Enum.find(overlay, nil, fn({_, val}) -> val[:active?] end)
+    merged  = api_merged_data()
+    result  = Enum.find(merged, nil, fn({_, val}) -> val[:active?] end)
     case result do
       {key, _val} -> key
-      nil -> first_key(overlay)
+      nil -> first_key(merged)
     end
   end
 
@@ -106,9 +103,9 @@ defmodule Superwatch.Svc.Store do
     :ok
   end
 
-  # def api_reload(config \\ []) do
-  #   GenServer.call(@proc_name, {:reload, config})
-  # end
+  def api_reload(opts \\ []) do
+    GenServer.call(@proc_name, {:reload, opts})
+  end
 
   # ----- callbacks
 
@@ -139,12 +136,21 @@ defmodule Superwatch.Svc.Store do
   #   {:reply, new_config, %{config: new_config}}
   # end
 
-  # @doc false
-  # @impl true
-  # def handle_call({:reload, new_cfg}, _from, _state) do
-  #   new_config = config_map() |> config_update(new_cfg)
-  #   {:reply, new_config, %{config: new_config}}
-  # end
+  @impl true
+  def handle_call({:reload, opts}, _from, _state) do
+    new_state = opts |> init_state()
+    {:reply, :ok, new_state}
+  end
+
+  @impl true
+  def handle_call(:stop, _from, state) do
+    {:stop, :normal, state, state}
+  end
+
+  @impl true
+  def handle_call(:kill, _from, state) do
+    {:stop, :normal, state, state}
+  end
 
   # ----- helpers
 
@@ -207,6 +213,21 @@ defmodule Superwatch.Svc.Store do
         Map.merge(acc, tgt)
     end)
     Map.merge(base1, base2)
+  end
+
+  # init_state
+
+  def init_state(opts) do
+    root_file    = opts[:root_file] || default_root_file()
+    overlay_file = opts[:overlay_file] || default_overlay_file()
+    root_data    = read_data(root_file)
+    overlay_data = read_data(overlay_file)
+    %{
+      root_file:    root_file,
+      overlay_file: overlay_file,
+      root_data:    root_data,
+      overlay_data: overlay_data
+    }
   end
 
   # test helper

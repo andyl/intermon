@@ -79,6 +79,11 @@ defmodule Superwatch.Svc.Worker do
     GenServer.call(@proc_name, :stop)
   end
 
+  def api_kill do
+    GenServer.call(@proc_name, :kill)
+  end
+
+
   @doc """
   Exit the Worker process.
   """
@@ -154,6 +159,11 @@ defmodule Superwatch.Svc.Worker do
       end
     end
     {:reply, :ok, %Worker{state | task: nil}}
+  end
+
+  @impl true
+  def handle_call(:kill, _from, state) do
+    {:stop, :normal, state, state}
   end
 
   @impl true
