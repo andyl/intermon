@@ -136,3 +136,6 @@ Release:
 - [ ] Add Burrito config 
 - [ ] Create release page with burrito executables
 
+Long Term:
+- [ ] Add tab completion
+
