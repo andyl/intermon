@@ -4,9 +4,17 @@ Superwatch provides interactive supervision for file monitor and worker
 programs.  Superwatch is useful for software development, watching for file
 changes and automatically running regression tests.
 
-## Downloading Superwatch
+## Superwatch Executables
 
-Superwatch is available as a standalone executable.  Location TBD.
+| Execution Method   | Status | Note                       |
+|--------------------|--------|----------------------------|
+| Escript            | Fails  | MuonTrap failure           |
+| Burrito Executable | Fails  | Hangs, needs investigation |
+| IEX                | Works  | OK for dev                 |
+| Mix Release        | Works  | OK for dev                 |
+| Elixir Script      | Works  | Best option for now        |
+
+See the repo `andyl/mt_demo` for more info on Muon and Burrito.
 
 ## Getting Started
 
