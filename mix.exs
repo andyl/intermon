@@ -4,8 +4,8 @@ defmodule Superwatch.MixProject do
   def project do
     [
       app: :superwatch,
-      version: "0.0.1",
-      elixir: "~> 1.13",
+      version: "0.0.2",
+      elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps()
@@ -22,11 +22,11 @@ defmodule Superwatch.MixProject do
 
   defp deps do
     [
-      {:muontrap, "~> 1.0"},
-      {:yaml_elixir, "~> 2.9"},
+      {:muontrap, "~> 1.1"},
+      {:table_rex, "~> 3.1"},
       {:file_system, "~> 0.2"},
-      {:ymlr, "~> 2.0"},
-      {:table_rex, "~> 3.1"}
+      {:yaml_elixir, "~> 2.9"},
+      {:ymlr, "~> 3.0"},
     ]
   end
 
