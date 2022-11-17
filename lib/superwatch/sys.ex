@@ -67,7 +67,7 @@ defmodule Superwatch.Sys do
   end
 
   defp eval_command(assigns, merge_data) do
-    merge_data[:command] || ""
+    merge_data[:command]
     |> EEx.eval_string(assigns)
   end
 
