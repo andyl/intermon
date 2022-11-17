@@ -12,7 +12,7 @@ changes and automatically running regression tests.
 | Burrito Executable | Fails  | Hangs, needs investigation |
 | IEX                | Works  | OK for dev                 |
 | Mix Release        | Works  | OK for dev                 |
-| Elixir Script      | Works  | Best option for now        |
+| Elixir Script      | Works  | Best option                |
 
 See the repo `andyl/mt_demo` for more info on Muon and Burrito.
 

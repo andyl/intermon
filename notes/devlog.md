@@ -127,14 +127,10 @@ Long Term:
 
 GetCh: 
 - [ ] study owl
-- [ ] study elixir iex 
+- [ ] study elixir IEx.CLI.start 
 - [ ] test rlfe and rlwrap 
-- [ ] Add tab completion & history
-
-Release:
-- [ ] Add release config 
-- [ ] Add Burrito config 
-- [ ] Create release page with burrito executables
+- [ ] study tty_sl
+- [ ] Add tab completion & history 
 
 Long Term:
 - [ ] Add tab completion
