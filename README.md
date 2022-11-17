@@ -79,17 +79,15 @@ your `.gitignore` file.
 
 Here are some excellent file watcher programs.  
 
-|----------------------------|------------|--------------|
 | Project                    | Language   | Interactive? |
 |----------------------------|------------|--------------|
 | [fswatch][f]               | Agnostic   | no           |
 | [entr][e]                  | Agnostic   | no           |
 | [watchexec][w]             | Agnostic   | no           |
 | [guard][g]                 | Ruby       | no           |
-| [jest][j] [watch][jw]      | Javascript | yes          |
+| [jest][j] [watch][ji]      | Javascript | yes          |
 | [mix_test_watch][mw]       | Elixir     | no           |
 | [mix_test_interactive][mi] | Elixir     | yes          |
-|----------------------------|------------|--------------|
 
 Superwatch is language agnostic and interactive.
 
