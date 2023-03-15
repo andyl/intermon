@@ -4,9 +4,17 @@ Superwatch provides interactive supervision for file monitor and worker
 programs.  Superwatch is useful for software development, watching for file
 changes and automatically running regression tests.
 
-## Downloading Superwatch
+## Superwatch Executables
 
-Superwatch is available as a standalone executable.  Location TBD.
+| Execution Method   | Status | Note                       |
+|--------------------|--------|----------------------------|
+| Escript            | Fails  | MuonTrap failure           |
+| Burrito Executable | Fails  | Hangs, needs investigation |
+| IEX                | Works  | OK for dev                 |
+| Mix Release        | Works  | OK for dev                 |
+| Elixir Script      | Works  | Best option for now        |
+
+See the repo `andyl/mt_demo` for more info on Muon and Burrito.
 
 ## Getting Started
 
@@ -71,17 +79,15 @@ your `.gitignore` file.
 
 Here are some excellent file watcher programs.  
 
-|----------------------------|------------|--------------|
 | Project                    | Language   | Interactive? |
 |----------------------------|------------|--------------|
 | [fswatch][f]               | Agnostic   | no           |
 | [entr][e]                  | Agnostic   | no           |
 | [watchexec][w]             | Agnostic   | no           |
 | [guard][g]                 | Ruby       | no           |
-| [jest][j] [watch][jw]      | Javascript | yes          |
+| [jest][j] [watch][ji]      | Javascript | yes          |
 | [mix_test_watch][mw]       | Elixir     | no           |
 | [mix_test_interactive][mi] | Elixir     | yes          |
-|----------------------------|------------|--------------|
 
 Superwatch is language agnostic and interactive.
 

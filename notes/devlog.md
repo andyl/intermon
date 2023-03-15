@@ -94,28 +94,49 @@ Actions:
 
 - [x] Write svc/store 
 - [x] write tests for svc/store 
+- [x] reimplement CLI
+- [x] Reload after Agent Edit 
+- [x] Reload after Prefs Edit
+- [x] Command Generate (build, test) 
+- [x] Fix performance issues
+
+## 2022 Feb 15 Tue
+
+- [x] Agent and command on prompt
+- [x] Command generate EEX
+- [x] Option Parse 
+- [x] Set command / OptionParse / Parse Generator
+- [x] Diagnose editor performance
+
+Learning:
+- editor cannot work 
+- must launch in separate terminal
+
+- [x] Do editor launch in terminal 
+- [x] Add a reload command 
+
+## 2022 Feb 16 Wed
+
+- [x] Added "doc" attribute for agent flags and args 
+- [x] Added `agent show` comment to show agent options and doc 
+- [x] Fix bug when there is no overlay file.
 
 ## TODO
 
-Commands:
-- [x] run 
-- [x] agent list 
-- [x] agent edit 
-- [ ] agent select 
-- [x] prefs show 
-- [x] prefs edit 
-- [ ] prefs reset 
-- [ ] exit 
-- [ ] help
-
-Features: 
-- [ ] Reload after Agent Edit 
-- [ ] Reload after Prefs Edit
-- [ ] Update prefs after Agent Select 
-- [ ] Implement PrefsShow 
-- [ ] Implement PrefsReset
+Next Steps: 
+- [ ] Monitor agent and overlay files and auto-reload 
 - [ ] Validate Agent format (use ecto?)
 - [ ] Validate Prefs formatting (use ecto?) 
+
+Long Term: 
+- [ ] Agent Library in Repo 
+- [ ] Download agents using client
+
+GetCh: 
+- [ ] study owl
+- [ ] study elixir iex 
+- [ ] test rlfe and rlwrap 
+- [ ] Add tab completion & history
 
 Release:
 - [ ] Add release config 

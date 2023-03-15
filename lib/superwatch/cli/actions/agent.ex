@@ -1,6 +1,6 @@
 defmodule Superwatch.Cli.Actions.Agent do
 
-  alias Superwatch.Api
+  alias Superwatch.Cli.Repl
   alias Superwatch.Svc.Store
 
   @moduledoc """
@@ -11,23 +11,26 @@ defmodule Superwatch.Cli.Actions.Agent do
     Store.api_root_file()
     |> Path.expand()
     |> Util.Editor.launch()
-    do_prompt()
+    Repl.do_prompt()
   end
 
   def handle(["agent", "list"]) do
     header = ~w(Agent Description Active?)
-    rows = Api.agent_list()
-    TableRex.quick_render!(rows, header) <> "\n"
+    rows = Superwatch.Api.agent_list()
+    TableRex.quick_render!(rows, header)
     |> IO.puts()
     do_prompt()
   end
 
-  def handle(["agent", "select", target]) do
-    IO.puts("Selecting #{target}")
-    case Api.agent_select(target) do
-      {:error, msg} -> IO.puts("Error: #{msg}")
-      _ -> IO.puts("Selected: #{target}")
-    end
+  def handle(["agent", "show"]) do
+    {agent, data} = Superwatch.Api.agent_show()
+    IO.inspect(agent, label: "ACTIVE AGENT")
+    IO.inspect(data, label: "DATA")
+    do_prompt()
+  end
+
+  def handle(["agent", "select", _target]) do
+    IO.puts("UNDER CONSTRUCTION")
     do_prompt()
   end
 

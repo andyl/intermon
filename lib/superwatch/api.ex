@@ -12,13 +12,26 @@ defmodule Superwatch.Api do
   # -- ORG
 
   def start do
-    cmd = Sys.command()
-    prompt = Sys.prompt()
     Store.api_start()
-    Worker.api_set(cmd: cmd, clearscreen: true, prompt: prompt)
     Watcher.api_start()
     Worker.api_start()
+    cmd = Sys.command()
+    prompt = Sys.prompt()
+    Worker.api_set(cmd: cmd, clearscreen: true, prompt: prompt)
   end
+
+  def stop do
+    Store.api_stop()
+    Worker.api_stop()
+    Watcher.api_stop()
+  end
+
+  def kill do
+    Store.api_kill()
+    Worker.api_kill()
+    Watcher.api_kill()
+  end
+
 
   # -- RUN
 
@@ -27,6 +40,12 @@ defmodule Superwatch.Api do
   end
 
   # -- AGENT
+
+  def agent_show do
+    active_agent = Superwatch.Svc.Store.api_active_agent()
+    active_data = Superwatch.Svc.Store.api_merged_data()[active_agent]
+    {active_agent, active_data}
+  end
 
   def agent_list do
     Store.api_merged_data()
@@ -59,10 +78,13 @@ defmodule Superwatch.Api do
     :ok
   end
 
-  # -- RESET
+  # -- RELOAD
 
-  def reset do
-    # Prefs.api_reset()
+  def reload do
+    Store.api_reload()
+    cmd = Sys.command()
+    prompt = Sys.prompt()
+    Worker.api_set(cmd: cmd, prompt: prompt)
     :ok
   end
 

@@ -13,8 +13,7 @@ defmodule Superwatch.Data.Agent do
     :worker_args,   # set of worker arguments (k/v)
     :clearscreen?,  # clear before every worker run?
     :active?,       # the active agent
-    :pref_flags,    # preference flags
-    :pref_args      # preference arguments
+    :prefs,         # preference flags
   ]
 
   @doc """
@@ -37,8 +36,7 @@ defmodule Superwatch.Data.Agent do
       worker_args:   get(datakey, :worker_args   ) ,
       clearscreen?:  get(datakey, :clearscreen?  ) ,
       active?:       get(datakey, :active?       ) ,
-      pref_flags:    get(datakey, :pref_flags    ) ,
-      pref_args:     get(datakey, :pref_args     ) ,
+      prefs:         get(datakey, :prefs         ) ,
     }
   end
 

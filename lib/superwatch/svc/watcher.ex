@@ -58,6 +58,11 @@ defmodule Superwatch.Svc.Watcher do
     GenServer.call(@proc_name, :stop)
   end
 
+  def api_kill do
+    GenServer.call(@proc_name, :kill)
+  end
+
+
   def api_state do
     GenServer.call(@proc_name, :state)
   end
@@ -110,6 +115,11 @@ defmodule Superwatch.Svc.Watcher do
   def handle_call(:stop, _from, state) do
     if state.pid, do: stop_mon(state.pid)
     {:reply, :ok, %Watcher{state | pid: nil}}
+  end
+
+  @impl true
+  def handle_call(:kill, _from, state) do
+    {:stop, :normal, state, state}
   end
 
   @impl true
