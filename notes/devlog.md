@@ -15,6 +15,13 @@ Approach:
 - near term: gets-style CLI only
 - long term: study IEx, emulate it's features, release as lib
 
+TRY WITH OTP 26
+
+## Features 
+
+- [ ] Add select command to superwatch 
+- [ ] Run superwatch without prefs file 
+
 ## 2022 Jan 18 Tue
 
 - [x] Drop Worker 
