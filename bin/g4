@@ -1,0 +1,3 @@
+#!/usr/bin/env elixir
+
+:user_drv.start() |> IO.inspect()
