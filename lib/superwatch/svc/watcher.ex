@@ -51,40 +51,39 @@ defmodule Superwatch.Svc.Watcher do
   def api_start, do: api_start([])
 
   def api_start(opts) when is_list(opts) do
-    GenServer.call(@proc_name, {:start, opts})
+    GenServer.call(@proc_name, {:wa_start, opts})
   end
 
   def api_stop do
-    GenServer.call(@proc_name, :stop)
+    GenServer.call(@proc_name, :wa_stop)
   end
 
   def api_kill do
-    GenServer.call(@proc_name, :kill)
+    GenServer.call(@proc_name, :wa_kill)
   end
 
 
   def api_state do
-    GenServer.call(@proc_name, :state)
+    GenServer.call(@proc_name, :wa_state)
   end
 
   def api_set(opts) when is_list(opts) do
-    GenServer.call(@proc_name, {:set, opts})
+    GenServer.call(@proc_name, {:wa_set, opts})
   end
 
   def api_running? do
-    GenServer.call(@proc_name, :pid)
+    GenServer.call(@proc_name, :wa_pid)
   end
 
   def api_pid do
-    GenServer.call(@proc_name, :pid)
+    GenServer.call(@proc_name, :wa_pid)
   end
 
   def api_pidinfo do
-    GenServer.call(@proc_name, :pidinfo)
+    GenServer.call(@proc_name, :wa_pidinfo)
   end
 
   # ----- callbacks
-
 
   @impl true
   def handle_info({:file_event, _monitor_pid, {path, _events}}, state) do
@@ -103,7 +102,7 @@ defmodule Superwatch.Svc.Watcher do
   end
 
   @impl true
-  def handle_call({:start, opts}, _from, state) do
+  def handle_call({:wa_start, opts}, _from, state) do
     optsmap = opts |> to_map()
     if state.pid, do: stop_mon(state.pid)
     new_state = state |> Map.merge(optsmap)
@@ -112,35 +111,35 @@ defmodule Superwatch.Svc.Watcher do
   end
 
   @impl true
-  def handle_call(:stop, _from, state) do
+  def handle_call(:wa_stop, _from, state) do
     if state.pid, do: stop_mon(state.pid)
     {:reply, :ok, %Watcher{state | pid: nil}}
   end
 
   @impl true
-  def handle_call(:kill, _from, state) do
+  def handle_call(:wa_kill, _from, state) do
     {:stop, :normal, state, state}
   end
 
   @impl true
-  def handle_call(:state, _from, state) do
+  def handle_call(:wa_state, _from, state) do
     {:reply, state, state}
   end
 
   @impl true
-  def handle_call({:set, opts}, _from, state) do
+  def handle_call({:wa_set, opts}, _from, state) do
     optsmap = opts |> to_map()
     new_state = Map.merge(state, optsmap)
     {:reply, new_state, new_state}
   end
 
   @impl true
-  def handle_call(:pid, _from, state) do
+  def handle_call(:wa_pid, _from, state) do
     {:reply, state.pid, state}
   end
 
   @impl true
-  def handle_call(:pidinfo, _from, state) do
+  def handle_call(:wa_pidinfo, _from, state) do
     info = Process.info(state.pid)
     {:reply, info, state}
   end

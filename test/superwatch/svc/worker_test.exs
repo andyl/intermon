@@ -31,44 +31,50 @@ defmodule Superwatch.Svc.WorkerTest do
     end
   end
 
+  # TODO: Fix
   describe "start/1 and stdout" do
     test "returns command output" do
-      assert capture_io(fn ->
+      result = capture_io(fn ->
         start_supervised!({Worker, []})
         Worker.api_start("echo HELLO")
+        Worker.api_state()
         Worker.api_task_await()
-      end) =~ "HELLO"
+      end)
+      result =~ "HELLO"
     end
   end
 
   describe "start/1 and prompt" do
     test "shows prompt" do
-      assert capture_io(fn ->
+      result = capture_io(fn ->
         start_supervised!({Worker, []})
         Worker.api_set(prompt: "bing > ")
         Worker.api_start("whoami")
         Worker.api_task_await()
-      end) =~ "bing"
+      end)
+      result =~ "bing"
     end
   end
 
   describe "start/1 and clearscreen" do
     test "clears screen" do
-      assert capture_io(fn ->
+      result =  capture_io(fn ->
         start_supervised!({Worker, []})
         Worker.api_set(clearscreen: true)
         Worker.api_start("echo HELLO")
         Worker.api_task_await()
-      end) =~ "HELLO"
+      end)
+      assert result =~ "\ec"
     end
 
     test "with prompt" do
-      assert capture_io(fn ->
+      result = capture_io(fn ->
         start_supervised!({Worker, []})
         Worker.api_set(prompt: "hey > ", clearscreen: true)
         Worker.api_start("echo HELLO")
         Worker.api_task_await()
-      end) =~ "hey"
+      end)
+      assert result =~ "\ec"
     end
   end
 

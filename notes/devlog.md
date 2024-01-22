@@ -126,12 +126,8 @@ Long Term:
 - [ ] Download agents using client
 
 GetCh: 
-- [ ] study owl
+- [ ] OTP265 solution: get response from Lucas Larsson (sent Jen 19)
 - [ ] study elixir IEx.CLI.start 
-- [ ] test rlfe and rlwrap 
-- [ ] study tty_sl
-- [ ] Add tab completion & history 
-
-Long Term:
-- [ ] Add tab completion
+- [ ] study tty_sl and prim_tty 
+- [ ] Add tab completion & history (up/down arrow keys)
 

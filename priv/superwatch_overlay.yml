@@ -1,5 +1,6 @@
 ---
 ex_unit: 
+  command: mix test
   clearscreen: true
   active?: true
   prefs: "" 

@@ -67,7 +67,7 @@ defmodule Superwatch.Svc.Worker do
   end
 
   def api_start(opts) when is_list(opts) do
-    GenServer.call(@proc_name, {:start, opts})
+    GenServer.call(@proc_name, {:wk_start, opts})
   end
 
   @doc """
@@ -76,57 +76,56 @@ defmodule Superwatch.Svc.Worker do
   Stops a running worker command.
   """
   def api_stop do
-    GenServer.call(@proc_name, :stop)
+    GenServer.call(@proc_name, :wk_stop)
   end
 
   def api_kill do
-    GenServer.call(@proc_name, :kill)
+    GenServer.call(@proc_name, :wk_kill)
   end
-
 
   @doc """
   Exit the Worker process.
   """
   def api_exit do
-    GenServer.cast(@proc_name, :exit)
+    GenServer.cast(@proc_name, :wk_exit)
   end
 
   @doc """
   Update the Worker state.
   """
   def api_set(opts) when is_list(opts) do
-    GenServer.call(@proc_name, {:set, opts})
+    GenServer.call(@proc_name, {:wk_set, opts})
   end
 
   @doc """
   Return the Worker state.
   """
   def api_state do
-    GenServer.call(@proc_name, :state)
+    GenServer.call(@proc_name, :wk_state)
   end
 
   @doc """
   Returns true if the Worker command is running.
   """
   def api_running? do
-    GenServer.call(@proc_name, :task)
+    GenServer.call(@proc_name, :wk_task)
   end
 
   @doc """
   Return the PID of the running worker command.
   """
   def api_task do
-    GenServer.call(@proc_name, :task)
+    GenServer.call(@proc_name, :wk_task)
   end
 
   @doc false
   def api_task_await do
-    GenServer.call(@proc_name, :task_await)
+    GenServer.call(@proc_name, :wk_task_await)
   end
 
   @doc false
   def api_pidinfo do
-    GenServer.call(@proc_name, :pidinfo)
+    GenServer.call(@proc_name, :wk_pidinfo)
   end
 
   # ----- callbacks
@@ -142,7 +141,7 @@ defmodule Superwatch.Svc.Worker do
   end
 
   @impl true
-  def handle_call({:start, opts}, _from, state) do
+  def handle_call({:wk_start, opts}, _from, state) do
     optsmap = opts |> to_map()
     if state.task, do: Task.shutdown(state.task, :brutal_kill)
     new_state = state |> Map.merge(optsmap)
@@ -151,7 +150,7 @@ defmodule Superwatch.Svc.Worker do
   end
 
   @impl true
-  def handle_call(:stop, _from, state) do
+  def handle_call(:wk_stop, _from, state) do
     if state.task do
       stop_cmd(state)
       if state.prompt do
@@ -162,38 +161,39 @@ defmodule Superwatch.Svc.Worker do
   end
 
   @impl true
-  def handle_call(:kill, _from, state) do
+  def handle_call(:wk_kill, _from, state) do
     {:stop, :normal, state, state}
   end
 
   @impl true
-  def handle_call({:set, opts}, _from, state) do
+  def handle_call({:wk_set, opts}, _from, state) do
     optsmap = opts |> to_map()
     new_state = Map.merge(state, optsmap)
     {:reply, new_state, new_state}
   end
 
   @impl true
-  def handle_call(:state, _from, state) do
+  def handle_call(:wk_state, _from, state) do
     {:reply, state, state}
   end
 
   @impl true
-  def handle_call(:task, _from, %{task: task} = state) do
+  def handle_call(:wk_task, _from, %{task: task} = state) do
     {:reply, task, state}
   end
 
   @impl true
-  def handle_call(:task_await, _from, %{task: task} = state) do
+  def handle_call(:wk_task_await, _from, %{task: task} = state) do
     result = case task do
       nil -> nil
-      value -> Task.await(value)
+      value ->
+          Task.await(value)
     end
     {:reply, result, state}
   end
 
   @impl true
-  def handle_call(:pidinfo, _from, %{task: task} = state) do
+  def handle_call(:wk_pidinfo, _from, %{task: task} = state) do
     info = case task do
       nil -> nil
       task -> Process.info(task.pid)
@@ -203,7 +203,7 @@ defmodule Superwatch.Svc.Worker do
 
   # called when the task exits
   @impl true
-  def handle_cast(:exit, state) do
+  def handle_cast(:wk_exit, state) do
     if state.task && state.prompt do
       IO.write(state.prompt)
     end
@@ -218,14 +218,10 @@ defmodule Superwatch.Svc.Worker do
   end
 
   defp start_cmd(state) do
-    [cmd | args] = state.cmd |> OptionParser.split()
     clearscreen = "\x1Bc"
     if state.clearscreen, do: IO.write(clearscreen)
-    Task.async(fn ->
-      result = MuonTrap.cmd(cmd, args, into: IO.stream())
-      api_exit()
-      result
-    end)
+    api_exit()
+    Util.Xport.cast(state.cmd)
   end
 
   # stop a running command

@@ -14,53 +14,72 @@ changes and automatically running regression tests.
 | Mix Release        | Works  | OK for dev                 |
 | Elixir Script      | Works  | Best option                |
 
-See the repo `andyl/mt_demo` for more info on Muon and Burrito.
-
 ## Getting Started
 
-    > # get help
-    > superwatch help
-    >
-    > # generate a superwatch config file
-    > superwatch init 
-    >
-    > # start superwatch
-    > cd <YOURPROJECT>
-    > superwatch start
+```
+> # get help
+> superwatch help
+>
+> # generate a superwatch config file
+> superwatch init 
+>
+> # start superwatch
+> cd <YOURPROJECT>
+> superwatch start
+```
+
+Example Script: 
+
+```elixir 
+#!/usr/bin/env elixir
+
+Mix.install(
+  [
+    :jason, 
+    {:superwatch, path: "~/src/superwatch"}
+  ] 
+)
+
+Superwatch.Cli.Base.start()
+```
+
+Find other sample scripts in the `/scripts` directory...
 
 ## Superwatch Config
 
 The Superwatch config file is stored your root directory at `~/.superwatch.yml`.
 
-    ---
-    ex_unit:
-      desc: ExUnit for Elixir Project
-      monitor_command: watchexec -c -w lib -w test -e ex,exs,eex,heex "<%= worker_command %>"
-      worker_command: mix test <%= worker_flags %> <%= worker_opts %> --stale ; echo ---
-      worker_exit: /^---$/
-      worker_flags:
-        focus: 
-          alias: f
-          desc: Run only focus tests
-          longdesc: |
-            Only run specific tests, using ExUnit's `tag` feature
-    
-                @tag focus
-                test "mytest" do 
-                  assert 1 == 1
-                end
-          default: false
-          output: "--only focus:true" 
-      worker_opts:
-        only: 
-          alias: o
-          desc: Only run tests that match the filter
-          default: false
-          output: "--only <%= value %>" 
-    ex_unit_umbrella: 
-      import: [ex_unit]
-      desc: ExUnit for Elixir Umbrella Project
-      monitor_command: watchexec -c -w apps -e ex,exs,eex,heex "<%= worker_command %>"
+```
+---
+ex_unit:
+  desc: ExUnit for Elixir Project
+  monitor_command: watchexec -c -w lib -w test -e ex,exs,eex,heex "<%= worker_command %>"
+  worker_command: mix test <%= worker_flags %> <%= worker_opts %> --stale ; echo ---
+  worker_exit: /^---$/
+  worker_flags:
+    focus: 
+      alias: f
+      desc: Run only focus tests
+      longdesc: |
+        Only run specific tests, using ExUnit's `tag` feature
+
+            @tag focus
+            test "mytest" do 
+              assert 1 == 1
+            end
+      default: false
+      output: "--only focus:true" 
+  worker_opts:
+    only: 
+      alias: o
+      desc: Only run tests that match the filter
+      default: false
+      output: "--only <%= value %>" 
+ex_unit_umbrella: 
+  import: [ex_unit]
+  desc: ExUnit for Elixir Umbrella Project
+  monitor_command: watchexec -c -w apps -e ex,exs,eex,heex "<%= worker_command %>"
+```
 
 ## Superwatch State 
 
@@ -99,8 +118,4 @@ Superwatch is language agnostic and interactive.
 [ji]: https://egghead.io/lessons/javascript-use-jest-s-interactive-watch-mode 
 [mw]: https://hex.pm/packages/mix_test_watch
 [mi]: https://hexdocs.pm/mix_test_interactive/readme.html
-
-## Contributing
-
-Issues and PRs welcome!
 
